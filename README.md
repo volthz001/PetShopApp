@@ -1,67 +1,122 @@
-# PetShopApp 🐾
+# 🐾 PetShopApp - Pet Shop Management System
 
-**Sistem Informasi Manajemen Toko Hewan Peliharaan**  
-Aplikasi desktop Java untuk mengelola inventori, penjualan, dan data produk toko hewan dengan antarmuka GUI yang intuitif.
+**Aplikasi Desktop CRUD untuk Manajemen Inventori Toko Hewan Peliharaan**
+
+Aplikasi sederhana namun lengkap untuk mengelola produk dan hewan di toko hewan peliharaan. Dibangun dengan **Java Swing** sebagai frontend dan **MySQL** sebagai database.
+
+| Informasi | Detail |
+|-----------|--------|
+| **Developer** | Hizkia Siallagan |
+| **NIM** | 231011400154 |
+| **Universitas** | Universitas Pamulang (UNPAM) |
+| **Status** | ✅ Selesai & Siap Digunakan |
 
 ---
 
 ## 📋 Daftar Isi
 
 - [Fitur Utama](#-fitur-utama)
+- [Tech Stack](#-tech-stack)
 - [Persyaratan Sistem](#-persyaratan-sistem)
-- [Instalasi](#-instalasi)
-- [Cara Penggunaan](#-cara-penggunaan)
-- [Tampilan Aplikasi](#-tampilan-aplikasi)
-- [Use Case Diagram](#-use-case-diagram)
+- [Instalasi](#-instalasi-step-by-step)
+- [Konfigurasi Database](#-konfigurasi-database)
+- [Cara Menjalankan Aplikasi](#-cara-menjalankan-aplikasi)
+- [Panduan Penggunaan](#-panduan-penggunaan)
+- [Struktur Project](#-struktur-project)
 - [Troubleshooting](#-troubleshooting)
-- [Struktur Database](#-struktur-database)
+- [Use Case & Scenario](#-use-case--scenario)
 - [Kontribusi](#-kontribusi)
-- [Lisensi](#-lisensi)
 
 ---
 
 ## ✨ Fitur Utama
 
-- ✅ **CRUD Lengkap** — Tambah, baca, ubah, dan hapus data produk/hewan
-- ✅ **Antarmuka GUI Responsif** — Aplikasi desktop dengan tabel data interaktif
-- ✅ **Database MySQL** — Penyimpanan data terintegrasi dan reliable
-- ✅ **Validasi Input** — Pencegahan data kosong atau tidak valid
-- ✅ **Dialog Konfirmasi** — Persetujuan sebelum penghapusan data (aman dari tindakan tidak sengaja)
-- ✅ **Status Bar** — Pesan feedback real-time untuk setiap aksi
-- ✅ **Search/Filter** — Pencarian dan filter data produk (optional, bergantung implementasi)
+✅ **CRUD Lengkap**
+- Tambah (Create) produk/hewan baru
+- Baca (Read) seluruh data dari database
+- Ubah (Update) data produk yang sudah ada
+- Hapus (Delete) produk dengan konfirmasi
+
+✅ **User Interface Modern**
+- Desain responsive dengan Java Swing
+- Color-coded buttons (hijau=tambah, oranye=edit, merah=hapus)
+- Tabel data dengan alternating row colors untuk mudah dibaca
+- Status bar untuk feedback setiap aksi
+
+✅ **Search & Filter**
+- Cari produk berdasarkan: Kode, Nama, atau Jenis
+- Real-time search dengan tombol cari
+
+✅ **Validasi Input**
+- Validasi field kosong otomatis
+- Validasi tipe data (angka untuk stok & harga)
+- Deteksi duplicate kode produk
+- Format harga dengan separasi ribuan (Rp X,XXX,XXX)
+
+✅ **Keamanan Data**
+- Konfirmasi dialog sebelum delete
+- Prepared statements untuk mencegah SQL injection
+- Try-catch untuk error handling yang proper
+
+✅ **Database Integration**
+- Koneksi MySQL dengan test otomatis saat startup
+- 10 data sample siap pakai
+- Kategori produk yang beragam
 
 ---
 
-## 💻 Persyaratan Sistem
+## 💻 Tech Stack
 
-### Minimum Requirements
-| Komponen | Versi | Keterangan |
-|----------|-------|-----------|
-| **Java Runtime Environment (JRE)** | 11 atau lebih tinggi | Untuk menjalankan aplikasi |
-| **Java Development Kit (JDK)** | 11 atau lebih tinggi | Untuk kompilasi (development) |
-| **MySQL Server** | 5.7 atau 8.0+ | Database backend |
-| **RAM** | 512 MB minimum | Minimum untuk aplikasi berjalan lancar |
-| **Disk Space** | 200 MB | Untuk instalasi aplikasi + database |
+| Layer | Teknologi | Versi |
+|-------|-----------|-------|
+| **Frontend** | Java Swing | Built-in JDK |
+| **Backend Logic** | Java SE | 1.8+ |
+| **Database** | MySQL | 5.7, 8.0+ |
+| **JDBC Driver** | mysql-connector-j | 8.0.33 |
+| **IDE** | NetBeans | 11.0+ (atau Apache Netbeans) |
+| **Build System** | Apache Ant (NetBeans default) | Latest |
 
-### Software Dependencies
+### Library Dependencies
 ```
-Java Swing (built-in dengan JDK)
-MySQL Connector/J (untuk koneksi MySQL)
-Apache Commons Lang3 (utility library, optional)
+mysql-connector-j-8.0.33.jar (sudah di-include di folder lib)
 ```
 
 ---
 
-## 🚀 Instalasi
+## 🖥️ Persyaratan Sistem
 
-### Langkah 1: Install Java Development Kit (JDK)
+### Minimum Specifications
+
+| Requirement | Spesifikasi |
+|-------------|------------|
+| **OS** | Windows 7+, Linux (Ubuntu 18.04+), macOS 10.12+ |
+| **Processor** | Intel/AMD dual-core @ 2GHz |
+| **RAM** | 512 MB (1 GB recommended) |
+| **Storage** | 200 MB free space |
+| **Java** | JDK 1.8 (Java 8) atau lebih tinggi |
+| **MySQL** | Server 5.7 atau 8.0+ |
+
+### Software Prerequisites
+```
+✓ Java Development Kit (JDK) 1.8 atau lebih tinggi
+✓ MySQL Server (5.7 atau 8.0+)
+✓ MySQL Connector/J 8.0.33 (sudah included dalam project)
+✓ NetBeans IDE (untuk development)
+  ATAU Java Runtime Environment (JRE) untuk menjalankan .jar
+```
+
+---
+
+## 🚀 Instalasi Step-by-Step
+
+### Step 1️⃣: Install Java Development Kit (JDK)
 
 **Windows:**
 ```bash
 # Download dari https://www.oracle.com/java/technologies/downloads/
-# Pilih JDK 11+ → installer Windows → jalankan setup
+# Pilih JDK 8 atau lebih tinggi → installer Windows → double-click & ikuti wizard
 
-# Verifikasi instalasi
+# Verify installation
 java -version
 javac -version
 ```
@@ -69,520 +124,309 @@ javac -version
 **Linux (Ubuntu/Debian):**
 ```bash
 sudo apt update
-sudo apt install openjdk-11-jdk
+sudo apt install openjdk-8-jdk openjdk-8-jre
+
+# Verify
 java -version
+javac -version
 ```
 
 **macOS:**
 ```bash
-brew install openjdk@11
+brew install openjdk@8
+
+# Verify
 java -version
 ```
 
 ---
 
-### Langkah 2: Install MySQL Server
+### Step 2️⃣: Install MySQL Server
 
 **Windows:**
-```bash
-# Download dari https://dev.mysql.com/downloads/mysql/
-# Jalankan installer dan ikuti wizard setup
-# Set root password dan catat untuk nanti
+1. Download dari https://dev.mysql.com/downloads/mysql/
+2. Jalankan installer (MySQL 8.0 recommended)
+3. Ikuti setup wizard → set root password (catat untuk nanti)
+4. Pilih "Configure MySQL Server as a Windows Service"
 
-# Verifikasi
+Verifikasi:
+```bash
 mysql -u root -p
-# Masukkan password yang Anda buat
+# Masukkan password yang tadi dibuat
+# Jika berhasil, prompt akan berubah menjadi mysql>
+EXIT;
 ```
 
 **Linux (Ubuntu/Debian):**
 ```bash
 sudo apt update
 sudo apt install mysql-server
+
+# Jalankan secure installation
 sudo mysql_secure_installation
 
-# Verifikasi
+# Test koneksi
 mysql -u root -p
+EXIT;
 ```
 
 **macOS:**
 ```bash
 brew install mysql
 brew services start mysql
+
+# Setup (opsional)
+mysql_secure_installation
+
+# Test
 mysql -u root
-```
-
----
-
-### Langkah 3: Buat Database dan Import Schema
-
-```bash
-# Login ke MySQL
-mysql -u root -p
-
-# Di MySQL console, jalankan:
-CREATE DATABASE petshop_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE petshop_db;
-
-# Import schema (lihat bagian "Struktur Database" di bawah)
-# Kemudian exit
 EXIT;
 ```
 
 ---
 
-### Langkah 4: Clone Repository
+### Step 3️⃣: Clone atau Download Project
 
+**Option A - Menggunakan Git:**
 ```bash
-# Menggunakan HTTPS
 git clone https://github.com/volthz001/PetShopApp.git
 cd PetShopApp
-
-# ATAU menggunakan SSH (jika sudah setup)
-git clone git@github.com:volthz001/PetShopApp.git
-cd PetShopApp
 ```
+
+**Option B - Download ZIP Manual:**
+1. Buka https://github.com/volthz001/PetShopApp
+2. Klik tombol `Code` → `Download ZIP`
+3. Extract ke folder pilihan Anda
+4. Buka terminal di folder project
 
 ---
 
-### Langkah 5: Konfigurasi Koneksi Database
+### Step 4️⃣: Setup Database MySQL
 
-**Lokasi file:** `PetShopApp/src/config/DatabaseConfig.java` (atau sesuaikan dengan struktur Anda)
+**Import Database Schema:**
 
-```java
-public class DatabaseConfig {
-    // Database Configuration
-    public static final String DB_HOST = "localhost";
-    public static final String DB_PORT = "3306";
-    public static final String DB_NAME = "petshop_db";
-    public static final String DB_USER = "root";
-    public static final String DB_PASSWORD = "password_anda"; // Ganti dengan password Anda
-    
-    public static final String DB_URL = 
-        "jdbc:mysql://" + DB_HOST + ":" + DB_PORT + "/" + DB_NAME 
-        + "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
-}
-```
-
----
-
-### Langkah 6: Compile dan Run Aplikasi
-
-**Menggunakan IDE (NetBeans/IntelliJ IDEA):**
-1. Buka project di IDE pilihan Anda
-2. Build project (`Ctrl+Shift+B`)
-3. Jalankan aplikasi (`Shift+F6`)
-
-**Menggunakan Command Line:**
 ```bash
-# Navigate ke project root
-cd PetShopApp
-
-# Compile (jika menggunakan Maven)
-mvn clean compile
-
-# Jalankan
-mvn exec:java -Dexec.mainClass="com.petshop.Main"
-
-# ATAU jika project sederhana
-javac -d bin src/**/*.java
-java -cp bin:lib/* com.petshop.Main
-```
-
----
-
-## 📖 Cara Penggunaan
-
-### 1. **Membuka Aplikasi**
-- Jalankan aplikasi melalui IDE atau command line
-- Tunggu sampai form utama terbuka dan tabel produk terisi
-
-### 2. **Menambah Data Produk Baru**
-```
-1. Isi form input:
-   - ID Produk (contoh: PT001)
-   - Nama Produk/Hewan (contoh: Anjing Poodle)
-   - Harga
-   - Stok
-   - Kategori (optional)
-
-2. Klik tombol "Tambah" atau "Add"
-3. Tunggu pesan sukses di status bar
-4. Data baru muncul di tabel
-```
-
-### 3. **Mengubah Data Produk**
-```
-1. Klik salah satu baris di tabel (pilih data yang ingin diubah)
-2. Form otomatis terisi dengan data terpilih
-3. Edit field yang diperlukan
-4. Klik tombol "Update" atau "Ubah"
-5. Konfirmasi perubahan jika ada dialog
-6. Data di tabel ter-update secara real-time
-```
-
-### 4. **Menghapus Data Produk**
-```
-1. Klik baris data di tabel (pilih data yang ingin dihapus)
-2. Klik tombol "Hapus" atau "Delete"
-3. Konfirmasi penghapusan di dialog pop-up
-4. Jika dikonfirmasi, data dihapus dari database
-5. Tabel ter-refresh dan menampilkan sisa data
-```
-
-### 5. **Melihat Riwayat/Pencarian** (jika ada fitur)
-```
-- Gunakan field search untuk filter data
-- Atau gunakan dropdown kategori untuk filter
-- Tekan "Reset" untuk menampilkan semua data
-```
-
----
-
-## 🖥️ Tampilan Aplikasi
-
-### Tampilan Utama
-![Tampilan Utama Aplikasi](images/01-tampilan-utama.png)
-*Form kosong dengan tabel berisi 9 data produk/hewan peliharaan. Tombol aksi (Tambah, Ubah, Hapus) tersedia di bawah form input.*
-
-### Memilih & Mengedit Data
-![Pilih Data untuk Edit](images/02-pilih-data-edit.png)
-*Data PT009 dipilih dari tabel → form otomatis terisi dengan data terpilih → tombol Update & Hapus aktif siap digunakan.*
-
-### Konfirmasi Hapus Data
-![Konfirmasi Hapus](images/03-konfirmasi-hapus.png)
-*Dialog konfirmasi muncul sebelum penghapusan untuk mencegah tindakan tidak sengaja.*
-
-### Data Berhasil Dihapus
-![Setelah Hapus](images/04-setelah-hapus.png)
-*Data PT009 berhasil dihapus dari database → tabel kembali menjadi 8 baris → status bar menampilkan pesan sukses.*
-
-### Data Berhasil Ditambahkan
-![Setelah Tambah](images/05-setelah-tambah.png)
-*Data baru PT009 (Anjing BullDog) berhasil ditambahkan → tabel kembali menjadi 9 baris dengan data terbaru.*
-
----
-
-## 📋 Use Case Diagram
-
-![Use Case Diagram](images/06-use-case-diagram.png)
-
-### Deskripsi Use Case
-
-| Use Case | Aktor | Deskripsi |
-|----------|-------|-----------|
-| **View Products** | Admin, Staff | Menampilkan daftar semua produk dari database |
-| **Add Product** | Admin | Menambah produk baru ke database (include: Validate Input) |
-| **Edit Product** | Admin | Mengubah data produk yang sudah ada |
-| **Delete Product** | Admin | Menghapus produk dari database (include: Confirm Action) |
-| **Search Product** | Admin, Staff | Mencari atau filter produk berdasarkan criteria |
-| **Generate Report** | Admin | Membuat laporan inventori atau penjualan (optional) |
-
-**Relationships:**
-- `Validate Input` ⟵ *include* ⟵ `Add Product`
-- `Confirm Action` ⟵ *include* ⟵ `Delete Product`
-- **Database MySQL** ↔ System (simpan/ambil data)
-
----
-
-## 🐛 Troubleshooting
-
-### ❌ Error: "Connection refused: connect"
-
-**Penyebab:**
-- MySQL Server tidak running
-- Host atau port database salah
-- Credentials database tidak valid
-
-**Solusi:**
-```bash
-# 1. Pastikan MySQL berjalan
-# Windows
-net start MySQL80  # atau MySQL57, tergantung versi
-
-# Linux
-sudo service mysql start
-
-# macOS
-brew services start mysql
-
-# 2. Verifikasi koneksi manual
-mysql -h localhost -u root -p -e "SELECT 1"
-
-# 3. Cek file config di aplikasi
-# - Edit DatabaseConfig.java
-# - Verifikasi DB_HOST, DB_PORT, DB_USER, DB_PASSWORD
-```
-
----
-
-### ❌ Error: "No suitable driver found for jdbc:mysql"
-
-**Penyebab:**
-- MySQL Connector/J JAR tidak ditambahkan ke classpath
-- Path library tidak benar
-
-**Solusi:**
-
-**Jika menggunakan Maven** (`pom.xml`):
-```xml
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.33</version>
-</dependency>
-```
-Kemudian jalankan:
-```bash
-mvn clean install
-```
-
-**Jika manual:**
-1. Download `mysql-connector-java-8.0.33.jar` dari https://dev.mysql.com/downloads/connector/j/
-2. Tambahkan ke folder `lib/` project
-3. Di IDE: Right-click project → Build Path → Configure Build Path → Library → Add JARs
-
----
-
-### ❌ Error: "Access denied for user 'root'@'localhost'"
-
-**Penyebab:**
-- Password di config tidak sesuai dengan password MySQL sebenarnya
-
-**Solusi:**
-```bash
-# 1. Reset password MySQL (Windows)
-mysql -u root
-ALTER USER 'root'@'localhost' IDENTIFIED BY 'password_baru';
-FLUSH PRIVILEGES;
-EXIT;
-
-# 2. Update DatabaseConfig.java dengan password baru
-# 3. Recompile dan run ulang
-```
-
----
-
-### ❌ Error: "Table doesn't exist" atau "Unknown database"
-
-**Penyebab:**
-- Database atau tabel belum dibuat
-- Database salah dipilih
-
-**Solusi:**
-```bash
-# Login ke MySQL
+# Masuk ke MySQL console
 mysql -u root -p
 
-# Cek database yang ada
-SHOW DATABASES;
-
-# Jika petshop_db tidak ada, buat:
-CREATE DATABASE petshop_db CHARACTER SET utf8mb4;
-USE petshop_db;
-
-# Import schema (baca bagian "Struktur Database")
+# Masukkan password root MySQL Anda
 ```
+
+Kemudian jalankan SQL berikut di MySQL console:
+
+```sql
+-- Buat database
+CREATE DATABASE IF NOT EXISTS `db_Petshop_231011400154`
+    CHARACTER SET utf8mb4
+    COLLATE utf8mb4_unicode_ci;
+
+USE `db_Petshop_231011400154`;
+
+-- Buat tabel produk_hewan
+CREATE TABLE IF NOT EXISTS `produk_hewan` (
+    `kode`  VARCHAR(20)     NOT NULL,
+    `nama`  VARCHAR(100)    NOT NULL,
+    `jenis` VARCHAR(50)     NOT NULL,
+    `stok`  INT             NOT NULL DEFAULT 0,
+    `harga` DECIMAL(15, 2)  NOT NULL DEFAULT 0.00,
+    PRIMARY KEY (`kode`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Insert sample data (10 produk)
+INSERT INTO `produk_hewan` (`kode`, `nama`, `jenis`, `stok`, `harga`) VALUES
+('PT001', 'Kucing Persia',            'Hewan Peliharaan', 5,  2500000.00),
+('PT002', 'Anjing Golden Retriever',  'Hewan Peliharaan', 3,  4500000.00),
+('PT003', 'Royal Canin Adult Cat 2kg','Makanan Hewan',   20,   185000.00),
+('PT004', 'Pedigree Adult Dog 3kg',   'Makanan Hewan',   15,   145000.00),
+('PT005', 'Kandang Kucing Premium',   'Kandang & Tempat', 8,   350000.00),
+('PT006', 'Vitamin Kucing Nutri Plus', 'Obat & Vitamin', 30,    55000.00),
+('PT007', 'Shampo Anjing Anti Jamur', 'Grooming',        25,    45000.00),
+('PT008', 'Hamster Syria',            'Hewan Peliharaan',10,   120000.00),
+('PT009', 'Aquarium 60cm + Filter',   'Kandang & Tempat', 6,   450000.00),
+('PT010', 'Kalung + Tali Anjing',     'Aksesoris',       40,    75000.00);
+
+-- Konfirmasi
+SELECT COUNT(*) AS total_produk FROM produk_hewan;
+
+-- Exit
+EXIT;
+```
+
+**Atau import langsung dari file SQL** (jika menggunakan MySQL Workbench/phpMyAdmin):
+1. Buka database tool favorit Anda
+2. Pilih `Import` → navigasi ke file `db_Petshop_231011400154.sql`
+3. Klik execute/import
 
 ---
 
-### ❌ Error: "Port 3306 already in use"
+### Step 5️⃣: Buka Project di NetBeans
 
-**Penyebab:**
-- MySQL Server sudah running di instance lain
-- Port 3306 dipakai aplikasi lain
-
-**Solusi:**
-```bash
-# Windows - Cek process di port 3306
-netstat -ano | findstr :3306
-
-# Kill process (ganti PID)
-taskkill /PID 1234 /F
-
-# Atau jalankan MySQL di port berbeda
-# Edit my.ini dan ubah port=3307
-# Update DatabaseConfig.java: DB_PORT = "3307"
-```
+1. Buka NetBeans IDE
+2. File → Open Project → navigasi ke folder `PetShopApp`
+3. Klik "Open Project"
+4. IDE akan mendeteksi project sebagai "Ant-based Java Project"
 
 ---
 
-### ⚠️ Aplikasi Hang/Freeze saat Load Data
+### Step 6️⃣: Verifikasi Konfigurasi Database
 
-**Penyebab:**
-- Koneksi database timeout
-- Query terlalu lambat (data banyak)
-- Thread tidak async
+**Lokasi file:** `PetShopApp/src/petshopapp/DatabaseConnection.java`
 
-**Solusi:**
+Pastikan konfigurasi berikut sesuai dengan setup MySQL Anda:
+
 ```java
-// Gunakan SwingWorker untuk query background
-SwingWorker<List<Product>, Void> worker = new SwingWorker<List<Product>, Void>() {
-    @Override
-    protected List<Product> doInBackground() throws Exception {
-        return loadDataFromDatabase(); // Long-running query
-    }
-    
-    @Override
-    protected void done() {
-        try {
-            List<Product> products = get();
-            updateTableUI(products);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-};
-worker.execute();
+private static final String HOST     = "localhost";      // ✓ Correct
+private static final String PORT     = "3306";           // ✓ Correct (MySQL default)
+private static final String DB_NAME  = "db_Petshop_231011400154";  // ✓ Database name
+private static final String USERNAME = "root";           // ✓ MySQL username
+private static final String PASSWORD = "";               // ⚠️ SESUAIKAN dengan password MySQL Anda!
+```
+
+**Jika Anda set password MySQL**, ubah baris:
+```java
+private static final String PASSWORD = "YOUR_PASSWORD";  // ganti YOUR_PASSWORD
 ```
 
 ---
 
-### ✅ Aplikasi jalan tapi tabel kosong
+## 🎯 Cara Menjalankan Aplikasi
 
-**Penyebab:**
-- Data belum diinput ke database
-- Query SELECT tidak mengembalikan hasil
+### Menggunakan NetBeans IDE ✅ (Recommended)
 
-**Solusi:**
+1. Di NetBeans, buka project `PetShopApp`
+2. Klik menu **Run** → **Run Project** (atau tekan `Shift+F6`)
+3. Aplikasi akan di-compile dan dijalankan otomatis
+4. Jika koneksi database berhasil, aplikasi akan terbuka
+5. Lihat status di console untuk verify
+
+### Menggunakan Command Line
+
 ```bash
-# Cek tabel di MySQL
-mysql -u root -p petshop_db
-SELECT * FROM products;  # (atau nama tabel Anda)
+# Navigate ke project directory
+cd PetShopApp
 
-# Jika kosong, insert sample data
-INSERT INTO products (id_produk, nama, harga, stok) 
-VALUES ('PT001', 'Anjing Poodle', 5000000, 2);
+# Compile
+javac -cp lib/mysql-connector-j-8.0.33.jar -d build/classes src/petshopapp/*.java
+
+# Run
+java -cp lib/mysql-connector-j-8.0.33.jar:build/classes petshopapp.MainApp
+```
+
+### Menggunakan JAR File (Jika sudah di-export)
+
+```bash
+java -jar PetShopApp.jar
 ```
 
 ---
 
-## 🗄️ Struktur Database
+## 📖 Panduan Penggunaan
 
-### Schema Database `petshop_db`
+### 1️⃣ Tampilan Awal Aplikasi
 
-#### Tabel: `products` (atau `animals`)
+Saat aplikasi dibuka, Anda akan melihat:
+- **Panel Kiri**: Form input untuk menambah/edit produk
+- **Panel Kanan**: Tabel data produk yang sudah ada (10 data sample)
+- **Status Bar Bawah**: Menampilkan status setiap aksi
 
-```sql
-CREATE TABLE IF NOT EXISTS products (
-    id_produk VARCHAR(10) PRIMARY KEY,
-    nama VARCHAR(100) NOT NULL,
-    kategori VARCHAR(50),
-    deskripsi TEXT,
-    harga DECIMAL(12, 2) NOT NULL,
-    stok INT DEFAULT 0,
-    status ENUM('Aktif', 'Tidak Aktif') DEFAULT 'Aktif',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+### 2️⃣ Menambah Produk Baru
+
+```
+1. Isi form di panel kiri:
+   - Kode Produk    : Masukkan kode unik (contoh: PT011)
+   - Nama Produk    : Nama hewan/produk (contoh: "Burung Lovebird")
+   - Jenis          : Pilih dari dropdown (7 kategori tersedia)
+   - Stok           : Jumlah produk dalam angka
+   - Harga (Rp)     : Harga dalam rupiah (angka saja, format otomatis)
+
+2. Klik tombol "➕ Tambah"
+
+3. Sistem akan:
+   ✓ Validasi semua field tidak kosong
+   ✓ Cek kode tidak sudah terdaftar
+   ✓ Insert ke database
+   ✓ Refresh tabel otomatis
+   ✓ Menampilkan pesan sukses di status bar
+
+4. Form otomatis kosong, siap input berikutnya
 ```
 
-#### Tabel: `transactions` (optional - untuk tracking penjualan)
+**Contoh Input:**
+| Field | Value |
+|-------|-------|
+| Kode Produk | PT011 |
+| Nama Produk | Burung Lovebird |
+| Jenis | Hewan Peliharaan |
+| Stok | 4 |
+| Harga | 850000 |
 
-```sql
-CREATE TABLE IF NOT EXISTS transactions (
-    id_transaksi INT AUTO_INCREMENT PRIMARY KEY,
-    id_produk VARCHAR(10),
-    jumlah INT NOT NULL,
-    harga_satuan DECIMAL(12, 2),
-    total DECIMAL(12, 2),
-    tanggal_transaksi TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_produk) REFERENCES products(id_produk)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+### 3️⃣ Mengubah (Update) Produk
+
+```
+1. Di tabel sebelah kanan, KLIK pada baris produk yang ingin diubah
+   → Form otomatis terisi dengan data produk tersebut
+   → Tombol "✏ Update" & "🗑 Hapus" menjadi aktif
+   → Kode Produk menjadi read-only (tidak bisa diedit)
+
+2. Ubah field yang diperlukan:
+   - BISA mengubah: Nama, Jenis, Stok, Harga
+   - TIDAK BISA: Kode (sudah locked)
+
+3. Klik tombol "✏ Update"
+
+4. Dialog konfirmasi muncul, klik "Yes"
+
+5. Data akan ter-update di database dan tabel langsung refresh
+   → Status bar menampilkan pesan sukses
 ```
 
-### Sample Data
+### 4️⃣ Menghapus Produk
 
-```sql
-INSERT INTO products (id_produk, nama, kategori, harga, stok) VALUES
-('PT001', 'Anjing Poodle', 'Anjing', 5000000, 2),
-('PT002', 'Kucing Persia', 'Kucing', 3000000, 5),
-('PT003', 'Burung Beo', 'Burung', 2000000, 3),
-('PT004', 'Hamster', 'Rodent', 500000, 10),
-('PT005', 'Ikan Arwana', 'Ikan', 8000000, 1),
-('PT006', 'Kelinci', 'Mamalia Kecil', 1500000, 4),
-('PT007', 'Tarantula', 'Reptil', 2500000, 2),
-('PT008', 'Cockatiel', 'Burung', 3500000, 3),
-('PT009', 'Anjing BullDog', 'Anjing', 7000000, 1);
+```
+1. Klik pada baris produk di tabel
+   → Form terisi otomatis
+   → Tombol "🗑 Hapus" aktif
+
+2. Klik tombol "🗑 Hapus"
+
+3. Dialog konfirmasi muncul:
+   "Hapus produk dengan kode 'PT001'?
+    Data tidak dapat dikembalikan!"
+
+4. Klik "Yes" untuk konfirmasi
+
+5. Produk dihapus dari database
+   → Tabel ter-refresh
+   → Status bar: "Produk dengan kode 'PT001' berhasil dihapus"
 ```
 
----
+### 5️⃣ Mencari Produk (Search)
 
-## 💼 Use Cases (Skenario Penggunaan)
-
-### Use Case 1: Admin Mengelola Stok Harian
-
-**Scenario:**
-Setiap pagi, admin toko membuka aplikasi untuk:
-1. ✓ Melihat stok produk terkini (view all products)
-2. ✓ Update stok yang baru datang dari supplier (edit stok)
-3. ✓ Tandai produk yang sold out (delete atau ubah status)
-4. ✓ Catat penjualan dari kemarin
-
-**Implementasi di Aplikasi:**
 ```
-1. Admin login → Tampil tabel stok
-2. Hewan baru tiba → Tambah produk baru
-3. Hewan terjual → Update stok (kurang 1)
-4. Hewan mati/tidak laku → Hapus dari database
+1. Di panel kanan, ketik di kolom search
+   Contoh: "anjing" atau "PT005" atau "kandang"
+
+2. Klik tombol "🔍 Cari"
+
+3. Tabel akan menampilkan hasil pencarian
+   (cari di: Kode, Nama, atau Jenis)
+
+4. Untuk reset ke semua data, klik "↺ Refresh"
 ```
 
----
+### 6️⃣ Membersihkan Form
 
-### Use Case 2: Pencarian Produk Spesifik
-
-**Scenario:**
-Pelanggan datang mencari "Anjing ras Poodle", staff mencari data di sistem:
-
-**Implementasi di Aplikasi:**
 ```
-1. Staff ketik "Poodle" di search bar
-2. Sistem filter dan tampilkan: PT001 - Anjing Poodle
-3. Staff bisa lihat harga, stok, deskripsi
-4. Informasi diberikan ke pelanggan
+1. Klik tombol "🔄 Bersihkan" di panel kiri
+
+2. Semua field dalam form akan kosong
+
+3. Kode Produk kembali editable
+
+4. Tombol "✏ Update" & "🗑 Hapus" menjadi disabled
+
+5. Tombol "➕ Tambah" aktif kembali
 ```
-
----
-
-### Use Case 3: Laporan Inventori Bulanan
-
-**Scenario:**
-Manager ingin laporan nilai inventori untuk keperluan keuangan:
-
-**Implementasi (future feature):**
-```sql
-SELECT 
-    nama, 
-    stok, 
-    harga,
-    (stok * harga) AS nilai_inventori
-FROM products
-WHERE status = 'Aktif'
-ORDER BY nilai_inventori DESC;
-```
-
----
-
-### Use Case 4: Integrasi Point of Sale (POS)
-
-**Scenario:**
-Saat transaksi di kasir, aplikasi dapat:
-1. ✓ Query produk yang dijual
-2. ✓ Kurangi stok otomatis
-3. ✓ Simpan ke tabel `transactions`
-4. ✓ Hitung total + pajak
-
----
-
-## 🔧 Stack Teknologi
-
-| Komponen | Teknologi | Versi |
-|----------|-----------|-------|
-| **IDE** | NetBeans / IntelliJ IDEA | Terbaru |
-| **Language** | Java | 11+ |
-| **GUI** | Java Swing | Built-in |
-| **Database** | MySQL | 5.7, 8.0+ |
-| **JDBC Driver** | MySQL Connector/J | 8.0.33+ |
-| **Build Tool** | Maven (optional) | 3.6+ |
 
 ---
 
@@ -590,122 +434,464 @@ Saat transaksi di kasir, aplikasi dapat:
 
 ```
 PetShopApp/
-├── PetShopApp/
-│   ├── src/
-│   │   ├── com/
-│   │   │   └── petshop/
-│   │   │       ├── Main.java
-│   │   │       ├── config/
-│   │   │       │   └── DatabaseConfig.java
-│   │   │       ├── database/
-│   │   │       │   └── DatabaseConnection.java
-│   │   │       ├── model/
-│   │   │       │   └── Product.java
-│   │   │       ├── dao/
-│   │   │       │   └── ProductDAO.java
-│   │   │       └── ui/
-│   │   │           └── MainWindow.java
-│   │   └── resources/
-│   │       └── schema.sql
-│   ├── lib/
-│   │   └── mysql-connector-java-8.0.33.jar
-│   └── pom.xml (jika menggunakan Maven)
-├── images/
-│   ├── 01-tampilan-utama.png
-│   ├── 02-pilih-data-edit.png
-│   ├── 03-konfirmasi-hapus.png
-│   ├── 04-setelah-hapus.png
-│   ├── 05-setelah-tambah.png
-│   └── 06-use-case-diagram.png
-├── README.md
-└── LICENSE
+│
+├── src/petshopapp/
+│   ├── MainApp.java              ← Entry point aplikasi
+│   ├── MainFrame.java            ← UI/GUI (Java Swing)
+│   ├── DatabaseConnection.java   ← Koneksi MySQL & config
+│   ├── Produk.java               ← Model/Entity class
+│   └── ProdukDAO.java            ← Data Access Object (CRUD)
+│
+├── lib/
+│   └── mysql-connector-j-8.0.33.jar  ← MySQL JDBC driver
+│
+├── nbproject/
+│   ├── project.properties        ← NetBeans build config
+│   └── project.xml               ← NetBeans project metadata
+│
+├── build/                        ← Folder output compile (auto-generated)
+├── dist/                         ← Folder JAR distribution (jika di-build)
+│
+├── manifest.mf                   ← Manifest untuk JAR
+├── db_Petshop_231011400154.sql   ← Database schema & sample data
+├── README.md                     ← Dokumentasi ini
+└── LICENSE                       ← Lisensi MIT
 ```
+
+### Penjelasan File Kunci
+
+| File | Fungsi |
+|------|--------|
+| `MainApp.java` | Entry point aplikasi - berisi main() method & SwingUtilities |
+| `MainFrame.java` | UI utama - form input, tabel, tombol, styling |
+| `DatabaseConnection.java` | Manage koneksi MySQL & konfigurasi database |
+| `Produk.java` | Model/Entity untuk Produk - getter/setter |
+| `ProdukDAO.java` | CRUD operations - tambah, baca, cari, update, hapus ke database |
+| `db_Petshop_231011400154.sql` | SQL script untuk setup database & sample data |
+
+---
+
+## 🗄️ Struktur Database
+
+### Tabel: `produk_hewan`
+
+```sql
+CREATE TABLE `produk_hewan` (
+    `kode`  VARCHAR(20)     PRIMARY KEY,  -- Kode unik produk (PT001, PT002, dst)
+    `nama`  VARCHAR(100)    NOT NULL,     -- Nama produk/hewan
+    `jenis` VARCHAR(50)     NOT NULL,     -- Kategori/jenis produk
+    `stok`  INT             DEFAULT 0,    -- Jumlah stok
+    `harga` DECIMAL(15, 2)  DEFAULT 0.00  -- Harga dalam rupiah
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+```
+
+### Kategori/Jenis yang Tersedia
+
+1. **Hewan Peliharaan** - Anjing, kucing, hamster, burung, dll
+2. **Makanan Hewan** - Pet food berkualitas
+3. **Kandang & Tempat** - Kandang, aquarium, dll
+4. **Obat & Vitamin** - Suplemen hewan
+5. **Grooming** - Shampo, sikat, dll
+6. **Aksesoris** - Kalung, tali, mainan, dll
+7. **Lainnya** - Kategori bebas
+
+### Sample Data (10 Produk)
+
+| Kode | Nama | Jenis | Stok | Harga |
+|------|------|-------|------|-------|
+| PT001 | Kucing Persia | Hewan Peliharaan | 5 | Rp 2,500,000 |
+| PT002 | Anjing Golden Retriever | Hewan Peliharaan | 3 | Rp 4,500,000 |
+| PT003 | Royal Canin Adult Cat 2kg | Makanan Hewan | 20 | Rp 185,000 |
+| PT004 | Pedigree Adult Dog 3kg | Makanan Hewan | 15 | Rp 145,000 |
+| PT005 | Kandang Kucing Premium | Kandang & Tempat | 8 | Rp 350,000 |
+| PT006 | Vitamin Kucing Nutri Plus | Obat & Vitamin | 30 | Rp 55,000 |
+| PT007 | Shampo Anjing Anti Jamur | Grooming | 25 | Rp 45,000 |
+| PT008 | Hamster Syria | Hewan Peliharaan | 10 | Rp 120,000 |
+| PT009 | Aquarium 60cm + Filter | Kandang & Tempat | 6 | Rp 450,000 |
+| PT010 | Kalung + Tali Anjing | Aksesoris | 40 | Rp 75,000 |
+
+---
+
+## 🐛 Troubleshooting
+
+### ❌ Error: "Koneksi database gagal"
+
+**Penyebab & Solusi:**
+
+```
+1️⃣ MySQL Server tidak berjalan
+   Windows: 
+   - Tekan Win+R → ketik "services.msc"
+   - Cari "MySQL80" (atau versi Anda)
+   - Klik kanan → "Start"
+   
+   Linux:
+   - sudo service mysql start
+   - sudo systemctl start mysql
+   
+   macOS:
+   - brew services start mysql
+
+2️⃣ Database belum dibuat
+   - Buka MySQL console: mysql -u root -p
+   - Jalankan SQL di section "Setup Database MySQL"
+   
+3️⃣ Username/Password salah di DatabaseConnection.java
+   - Edit: src/petshopapp/DatabaseConnection.java
+   - Pastikan USERNAME & PASSWORD sesuai MySQL Anda
+   - Re-compile dan run
+
+4️⃣ Port MySQL bukan 3306
+   - Cek port MySQL: SHOW GLOBAL VARIABLES LIKE 'port';
+   - Update di DatabaseConnection.java: private static final String PORT = "3307";
+```
+
+---
+
+### ❌ Error: "Driver MySQL tidak ditemukan"
+
+**Penyebab:**
+MySQL Connector JAR tidak ada di classpath
+
+**Solusi:**
+
+**Di NetBeans:**
+1. Right-click project → Properties
+2. Sources → Java Sources Classpath
+3. Pastikan ada: `lib/mysql-connector-j-8.0.33.jar`
+4. Jika tidak ada, tambahkan file dari folder lib/
+
+**Command line:**
+```bash
+# Pastikan file ada di folder lib
+ls lib/mysql-connector-j-8.0.33.jar
+
+# Jika tidak ada, download dari:
+# https://dev.mysql.com/downloads/connector/j/
+
+# Atau copy dari repo yang sudah ada
+```
+
+---
+
+### ❌ Error: "Duplicate entry untuk Kode Produk"
+
+**Penyebab:**
+Kode produk yang diinput sudah ada di database
+
+**Solusi:**
+```
+1. Gunakan kode unik yang berbeda
+   ✗ PT001 (sudah ada)
+   ✓ PT011 (baru - belum ada)
+
+2. Atau delete produk lama terlebih dahulu
+   - Klik baris di tabel
+   - Klik tombol "🗑 Hapus"
+   - Klik "Yes"
+   - Barulah input dengan kode yang sama
+```
+
+---
+
+### ❌ Tabel kosong saat aplikasi dibuka
+
+**Penyebab:**
+- Database belum di-setup dengan data
+- Koneksi berhasil tapi tabel kosong
+
+**Solusi:**
+```bash
+# Login ke MySQL
+mysql -u root -p petshop_db_231011400154
+
+# Cek apakah tabel ada
+SHOW TABLES;
+
+# Cek apakah ada data
+SELECT COUNT(*) FROM produk_hewan;
+
+# Jika kosong, insert sample data:
+INSERT INTO `produk_hewan` VALUES 
+('PT001', 'Kucing Persia', 'Hewan Peliharaan', 5, 2500000.00),
+... (lihat bagian "Setup Database")
+
+# Exit
+EXIT;
+```
+
+---
+
+### ⚠️ Aplikasi freeze/hang saat load data banyak
+
+**Penyebab:**
+Query terlalu lambat atau timeout koneksi
+
+**Solusi:**
+```java
+// Edit di src/petshopapp/DatabaseConnection.java
+// Tambahkan timeout:
+private static final String URL =
+    "jdbc:mysql://" + HOST + ":" + PORT + "/" + DB_NAME
+    + "?useSSL=false&serverTimezone=Asia/Jakarta&allowPublicKeyRetrieval=true"
+    + "&connectTimeout=5000&socketTimeout=5000";  // ← Tambah ini
+```
+
+---
+
+### ✅ Verifikasi Setup Berhasil
+
+Pastikan indikator ini muncul:
+
+```
+✓ Java version muncul saat: java -version
+✓ MySQL connect berhasil: mysql -u root -p
+✓ Database ada: SHOW DATABASES; → db_Petshop_231011400154
+✓ Tabel ada: USE db_Petshop_231011400154; SHOW TABLES;
+✓ Data ada: SELECT COUNT(*) FROM produk_hewan; → 10 rows
+✓ Aplikasi buka tanpa error di console
+✓ Tabel di UI menampilkan 10 data sample
+✓ Status bar: "Menampilkan 10 data produk/hewan"
+```
+
+---
+
+## 📋 Use Case & Scenario
+
+### 🛍️ Use Case 1: Admin Kelola Stok Harian
+
+**Scenario:** Pagi hari, admin membuka aplikasi untuk kelola stok
+
+```
+Workflow:
+1. Buka aplikasi → lihat stok semua hewan (Tabel menampilkan 10 data)
+
+2. Hewan baru tiba dari supplier (Kucing Siamese):
+   - Fill form: PT011, "Kucing Siamese", Hewan Peliharaan, Stok: 3, Harga: 3500000
+   - Click "➕ Tambah"
+   - Tabel update → 11 data
+
+3. Anjing sudah terjual (stok kurang 2):
+   - Click PT002 di tabel → form terisi
+   - Ubah stok: 3 → 1
+   - Click "✏ Update"
+   - Tabel update → stok PT002 sekarang 1
+
+4. Hamster mati (tidak bisa dijual):
+   - Click PT008 di tabel
+   - Click "🗑 Hapus"
+   - Confirm → Tabel update → 10 data (Hamster dihapus)
+
+5. Admin selesai, aplikasi ditutup
+```
+
+---
+
+### 🔍 Use Case 2: Staff Cari Produk untuk Pelanggan
+
+**Scenario:** Pelanggan bertanya "Ada tidak grooming supplies?"
+
+```
+Workflow:
+1. Staff ketik "grooming" di search bar
+2. Click "🔍 Cari"
+3. Tabel menampilkan hasil: PT007 - Shampo Anjing Anti Jamur
+4. Staff bisa lihat: ada 25 stok, harga Rp 45,000
+5. Staff bilang ke pelanggan: "Ada, tersedia 25 pcs, harganya 45 ribu"
+6. Click "↺ Refresh" untuk lihat semua data lagi
+```
+
+---
+
+### 💰 Use Case 3: Laporan Pemilik untuk Keuangan
+
+**Scenario:** Pemilik toko ingin tahu total nilai inventori
+
+```
+Bisa dihitung manual:
+- Lihat kolom "Harga (Rp)"
+- Kalikan dengan "Stok"
+- Jumlahkan semua
+
+Total Inventori = Σ(Harga × Stok)
+Contoh:
+- PT001: 2,500,000 × 5 = 12,500,000
+- PT002: 4,500,000 × 3 = 13,500,000
+- PT003: 185,000 × 20 = 3,700,000
+- ...
+- Total ≈ Rp 75,000,000+
+
+💡 Feature ini bisa di-develop di v2.0
+```
+
+---
+
+### 📦 Use Case 4: Integrasi Kasir (Future)
+
+**Scenario:** Saat transaksi di kasir, sistem update stok otomatis
+
+```
+Misal pelanggan beli PT006 (Vitamin) qty 2:
+1. Kasir input: kode PT006, qty 2
+2. Sistem cek: stok PT006 saat ini 30
+3. Proses: stok berkurang 30 → 28
+4. Auto-update di database → tabel refresh
+5. Kasir lihat stok real-time terbaru
+
+Feature ini belum ada di v1.0
+Bisa di-develop di v2.0 dengan POS integration
+```
+
+---
+
+## 🔧 Tips & Best Practices
+
+### Development Tips
+
+✅ **Backup Database Rutin**
+```bash
+# Backup database
+mysqldump -u root -p db_Petshop_231011400154 > backup_petshop.sql
+
+# Restore dari backup
+mysql -u root -p db_Petshop_231011400154 < backup_petshop.sql
+```
+
+✅ **Ubah Password MySQL (Opsional)**
+```bash
+mysql -u root -p
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'password_baru';
+FLUSH PRIVILEGES;
+EXIT;
+
+# Update di DatabaseConnection.java:
+private static final String PASSWORD = "password_baru";
+```
+
+✅ **Create User Terpisah (Security)**
+```bash
+mysql -u root -p
+CREATE USER 'petshop_user'@'localhost' IDENTIFIED BY 'petshop_pass';
+GRANT ALL PRIVILEGES ON db_Petshop_231011400154.* TO 'petshop_user'@'localhost';
+FLUSH PRIVILEGES;
+EXIT;
+
+# Update di DatabaseConnection.java:
+private static final String USERNAME = "petshop_user";
+private static final String PASSWORD = "petshop_pass";
+```
+
+---
+
+## 📈 Roadmap v2.0 (Future Features)
+
+- [ ] 📊 Dashboard dengan chart statistik (grafik stok, penjualan)
+- [ ] 📥 Export laporan ke PDF/Excel
+- [ ] 👤 Multi-user dengan authentication & role (Admin, Staff, Manager)
+- [ ] 🧾 Modul Penjualan (POS integration)
+- [ ] 📅 History/Log transaksi
+- [ ] 🔔 Notifikasi stok minimum
+- [ ] 📱 Mobile app (Android/iOS)
+- [ ] 🌐 REST API backend (Spring Boot)
+- [ ] 🔐 Enkripsi password database
+- [ ] 🐳 Docker containerization
+
+---
+
+## 📸 Screenshots
+
+Aplikasi akan menampilkan:
+1. **Jendela Utama** dengan split pane (form + tabel)
+2. **Form Input** di sebelah kiri dengan 5 field + 4 tombol
+3. **Tabel Data** di sebelah kanan dengan 5 kolom (Kode, Nama, Jenis, Stok, Harga)
+4. **Status Bar** di bawah menampilkan feedback pesan
+5. **Color-coded UI** dengan tema Material Design
 
 ---
 
 ## 🤝 Kontribusi
 
-Kontribusi sangat diterima! Silakan:
+Ingin improve aplikasi ini? Silakan:
 
-1. **Fork** repository ini
-2. **Buat branch** fitur baru (`git checkout -b feature/NamaFitur`)
-3. **Commit** perubahan (`git commit -m "Add: Deskripsi fitur"`)
-4. **Push** ke branch (`git push origin feature/NamaFitur`)
-5. **Buat Pull Request** dengan penjelasan detail
+1. **Fork** repository
+2. **Clone** ke local: `git clone https://github.com/volthz001/PetShopApp.git`
+3. **Create branch** fitur: `git checkout -b feature/nama-fitur`
+4. **Commit** perubahan: `git commit -m "Add: deskripsi fitur"`
+5. **Push** ke GitHub: `git push origin feature/nama-fitur`
+6. **Open Pull Request** dengan penjelasan
 
-### Saran Fitur untuk Development Lanjutan:
-- ✨ Fitur search/filter produk
-- ✨ Laporan inventori (export PDF/Excel)
-- ✨ Multi-user authentication
-- ✨ Integrasi POS untuk checkout
-- ✨ Dashboard statistik penjualan
-- ✨ Backup database otomatis
+### Saran untuk Kontribusi:
+- Fix bugs & improve performa
+- Tambah fitur baru (search, filter, export, multi-user)
+- Improve UI/UX (dark theme, responsive, icon, dll)
+- Dokumentasi lebih lengkap
+- Unit tests & automation
 
 ---
 
-## 📝 Lisensi
+## 📞 Support & Issues
 
-Project ini dilisensikan di bawah **MIT License** — Lihat file [LICENSE](LICENSE) untuk detail lengkap.
+Ada masalah atau pertanyaan?
+
+📧 **Email:** (contact info)  
+🐛 **Report Bug:** https://github.com/volthz001/PetShopApp/issues  
+💬 **Discussion:** https://github.com/volthz001/PetShopApp/discussions  
+
+---
+
+## 📄 Lisensi
+
+Project ini dilisensikan di bawah **MIT License**.  
+Lihat file [LICENSE](LICENSE) untuk detail lengkap.
 
 ```
 MIT License
 
-Copyright (c) 2025 Voltz (volthz001)
+Copyright (c) 2025 Hizkia Siallagan - 231011400154
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files...
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and subject to the person furnwhom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 ```
 
 ---
 
-## 👥 Author
+## 🏫 Tentang Project Ini
 
-**Voltz** (volthz001)  
-Informatics Engineering Student — Universitas Pamulang  
-📧 Email: [contact information]  
-🔗 GitHub: [@volthz001](https://github.com/volthz001)
-
----
-
-## 📞 Support & Questions
-
-Jika ada pertanyaan atau menemukan bug:
-
-1. **Buka Issue** di GitHub → https://github.com/volthz001/PetShopApp/issues
-2. **Cantumkan:**
-   - Versi Java & MySQL
-   - Screenshot error atau log file
-   - Langkah untuk reproduce error
-3. **Berikan tracking ID** jika memungkinkan
+| Aspek | Detail |
+|-------|--------|
+| **Tujuan** | Tugas Kuliah - Praktik Java Swing & Database |
+| **Universitas** | Universitas Pamulang (UNPAM) |
+| **Jurusan** | Teknik Informatika |
+| **Semester** | 6 |
+| **Developer** | Hizkia Siallagan |
+| **NIM** | 231011400154 |
+| **Status** | ✅ Selesai & Production Ready |
 
 ---
 
-## 🎯 Roadmap v2.0
+## 📚 Referensi & Resources
 
-- [ ] Fitur search/filter real-time
-- [ ] Export laporan ke PDF
-- [ ] Authentication & role management
-- [ ] Mobile app companion (Flutter/React Native)
-- [ ] REST API backend (Spring Boot)
-- [ ] Dashboard analytics
-- [ ] Backup database otomatis
-- [ ] Dark mode UI
-
----
-
-**Last Updated:** June 2025  
-**Versi:** 1.0.0  
-**Status:** Active Development
-
----
-
-## 📚 Resources & References
-
-- [Java Documentation](https://docs.oracle.com/en/java/)
-- [MySQL Documentation](https://dev.mysql.com/doc/)
-- [Java Swing Tutorial](https://docs.oracle.com/javase/tutorial/uiswing/)
+- [Oracle Java Swing Tutorial](https://docs.oracle.com/javase/tutorial/uiswing/)
+- [MySQL Official Documentation](https://dev.mysql.com/doc/)
 - [JDBC API Reference](https://docs.oracle.com/javase/8/docs/api/java/sql/package-summary.html)
+- [NetBeans IDE Guide](https://netbeans.apache.org/tutorials/)
+- [GitHub README Best Practices](https://github.com/TryGhost/Ghost/blob/master/README.md)
 
 ---
 
-**Terima kasih telah menggunakan PetShopApp! 🐾**
+**Made with ❤️ by Hizkia Siallagan**  
+*Last Updated: June 2025*  
+**Version: 1.0.0**
+
+Terima kasih telah menggunakan **PetShopApp**! 🐾
+
+---
+
+*Setiap bug yang ditemukan atau saran fitur sangat diterima. Jangan ragu untuk membuka issue atau PR!* 💪
