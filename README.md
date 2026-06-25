@@ -22,9 +22,12 @@ Aplikasi sederhana namun lengkap untuk mengelola produk dan hewan di toko hewan 
 - [Konfigurasi Database](#-konfigurasi-database)
 - [Cara Menjalankan Aplikasi](#-cara-menjalankan-aplikasi)
 - [Panduan Penggunaan](#-panduan-penggunaan)
+- [**🎨 Tampilan Aplikasi (Screenshots)**](#-tampilan-aplikasi-screenshots)
+- [**📊 Use Case Diagram & Explanation**](#-use-case-diagram--explanation)
+- [**🔄 Workflow & Sequence Diagrams**](#-workflow--sequence-diagrams)
+- [**💼 Use Case Details & Scenarios**](#-use-case-details--scenarios)
 - [Struktur Project](#-struktur-project)
 - [Troubleshooting](#-troubleshooting)
-- [Use Case & Scenario](#-use-case--scenario)
 - [Kontribusi](#-kontribusi)
 
 ---
@@ -73,13 +76,7 @@ Aplikasi sederhana namun lengkap untuk mengelola produk dan hewan di toko hewan 
 | **Backend Logic** | Java SE | 1.8+ |
 | **Database** | MySQL | 5.7, 8.0+ |
 | **JDBC Driver** | mysql-connector-j | 8.0.33 |
-| **IDE** | NetBeans | 11.0+ (atau Apache Netbeans) |
-| **Build System** | Apache Ant (NetBeans default) | Latest |
-
-### Library Dependencies
-```
-mysql-connector-j-8.0.33.jar (sudah di-include di folder lib)
-```
+| **IDE** | NetBeans | 11.0+ |
 
 ---
 
@@ -89,21 +86,12 @@ mysql-connector-j-8.0.33.jar (sudah di-include di folder lib)
 
 | Requirement | Spesifikasi |
 |-------------|------------|
-| **OS** | Windows 7+, Linux (Ubuntu 18.04+), macOS 10.12+ |
+| **OS** | Windows 7+, Linux, macOS 10.12+ |
 | **Processor** | Intel/AMD dual-core @ 2GHz |
 | **RAM** | 512 MB (1 GB recommended) |
 | **Storage** | 200 MB free space |
-| **Java** | JDK 1.8 (Java 8) atau lebih tinggi |
+| **Java** | JDK 1.8 atau lebih tinggi |
 | **MySQL** | Server 5.7 atau 8.0+ |
-
-### Software Prerequisites
-```
-✓ Java Development Kit (JDK) 1.8 atau lebih tinggi
-✓ MySQL Server (5.7 atau 8.0+)
-✓ MySQL Connector/J 8.0.33 (sudah included dalam project)
-✓ NetBeans IDE (untuk development)
-  ATAU Java Runtime Environment (JRE) untuk menjalankan .jar
-```
 
 ---
 
@@ -128,14 +116,11 @@ sudo apt install openjdk-8-jdk openjdk-8-jre
 
 # Verify
 java -version
-javac -version
 ```
 
 **macOS:**
 ```bash
 brew install openjdk@8
-
-# Verify
 java -version
 ```
 
@@ -146,83 +131,50 @@ java -version
 **Windows:**
 1. Download dari https://dev.mysql.com/downloads/mysql/
 2. Jalankan installer (MySQL 8.0 recommended)
-3. Ikuti setup wizard → set root password (catat untuk nanti)
-4. Pilih "Configure MySQL Server as a Windows Service"
+3. Setup wizard → set root password (catat untuk nanti)
+4. Pilih "Configure MySQL Server as Windows Service"
 
-Verifikasi:
-```bash
-mysql -u root -p
-# Masukkan password yang tadi dibuat
-# Jika berhasil, prompt akan berubah menjadi mysql>
-EXIT;
-```
-
-**Linux (Ubuntu/Debian):**
+**Linux (Ubuntu):**
 ```bash
 sudo apt update
 sudo apt install mysql-server
-
-# Jalankan secure installation
 sudo mysql_secure_installation
-
-# Test koneksi
 mysql -u root -p
-EXIT;
 ```
 
 **macOS:**
 ```bash
 brew install mysql
 brew services start mysql
-
-# Setup (opsional)
-mysql_secure_installation
-
-# Test
 mysql -u root
-EXIT;
 ```
 
 ---
 
-### Step 3️⃣: Clone atau Download Project
+### Step 3️⃣: Clone Project
 
-**Option A - Menggunakan Git:**
 ```bash
 git clone https://github.com/volthz001/PetShopApp.git
 cd PetShopApp
 ```
 
-**Option B - Download ZIP Manual:**
-1. Buka https://github.com/volthz001/PetShopApp
-2. Klik tombol `Code` → `Download ZIP`
-3. Extract ke folder pilihan Anda
-4. Buka terminal di folder project
-
 ---
 
 ### Step 4️⃣: Setup Database MySQL
 
-**Import Database Schema:**
-
 ```bash
-# Masuk ke MySQL console
 mysql -u root -p
-
-# Masukkan password root MySQL Anda
 ```
 
-Kemudian jalankan SQL berikut di MySQL console:
+Kemudian jalankan SQL berikut:
 
 ```sql
--- Buat database
 CREATE DATABASE IF NOT EXISTS `db_Petshop_231011400154`
     CHARACTER SET utf8mb4
     COLLATE utf8mb4_unicode_ci;
 
 USE `db_Petshop_231011400154`;
 
--- Buat tabel produk_hewan
 CREATE TABLE IF NOT EXISTS `produk_hewan` (
     `kode`  VARCHAR(20)     NOT NULL,
     `nama`  VARCHAR(100)    NOT NULL,
@@ -232,7 +184,6 @@ CREATE TABLE IF NOT EXISTS `produk_hewan` (
     PRIMARY KEY (`kode`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Insert sample data (10 produk)
 INSERT INTO `produk_hewan` (`kode`, `nama`, `jenis`, `stok`, `harga`) VALUES
 ('PT001', 'Kucing Persia',            'Hewan Peliharaan', 5,  2500000.00),
 ('PT002', 'Anjing Golden Retriever',  'Hewan Peliharaan', 3,  4500000.00),
@@ -245,187 +196,829 @@ INSERT INTO `produk_hewan` (`kode`, `nama`, `jenis`, `stok`, `harga`) VALUES
 ('PT009', 'Aquarium 60cm + Filter',   'Kandang & Tempat', 6,   450000.00),
 ('PT010', 'Kalung + Tali Anjing',     'Aksesoris',       40,    75000.00);
 
--- Konfirmasi
 SELECT COUNT(*) AS total_produk FROM produk_hewan;
-
--- Exit
 EXIT;
 ```
 
-**Atau import langsung dari file SQL** (jika menggunakan MySQL Workbench/phpMyAdmin):
-1. Buka database tool favorit Anda
-2. Pilih `Import` → navigasi ke file `db_Petshop_231011400154.sql`
-3. Klik execute/import
-
 ---
 
-### Step 5️⃣: Buka Project di NetBeans
+### Step 5️⃣: Verifikasi Konfigurasi Database
 
-1. Buka NetBeans IDE
-2. File → Open Project → navigasi ke folder `PetShopApp`
-3. Klik "Open Project"
-4. IDE akan mendeteksi project sebagai "Ant-based Java Project"
-
----
-
-### Step 6️⃣: Verifikasi Konfigurasi Database
-
-**Lokasi file:** `PetShopApp/src/petshopapp/DatabaseConnection.java`
-
-Pastikan konfigurasi berikut sesuai dengan setup MySQL Anda:
+Edit file: `src/petshopapp/DatabaseConnection.java`
 
 ```java
-private static final String HOST     = "localhost";      // ✓ Correct
-private static final String PORT     = "3306";           // ✓ Correct (MySQL default)
-private static final String DB_NAME  = "db_Petshop_231011400154";  // ✓ Database name
-private static final String USERNAME = "root";           // ✓ MySQL username
-private static final String PASSWORD = "";               // ⚠️ SESUAIKAN dengan password MySQL Anda!
-```
-
-**Jika Anda set password MySQL**, ubah baris:
-```java
-private static final String PASSWORD = "YOUR_PASSWORD";  // ganti YOUR_PASSWORD
+private static final String HOST     = "localhost";
+private static final String PORT     = "3306";
+private static final String DB_NAME  = "db_Petshop_231011400154";
+private static final String USERNAME = "root";
+private static final String PASSWORD = "";  // ⚠️ Ubah sesuai password Anda!
 ```
 
 ---
 
-## 🎯 Cara Menjalankan Aplikasi
+### Step 6️⃣: Jalankan Aplikasi
 
-### Menggunakan NetBeans IDE ✅ (Recommended)
+**Di NetBeans:**
+```
+Run → Run Project (Shift+F6)
+```
 
-1. Di NetBeans, buka project `PetShopApp`
-2. Klik menu **Run** → **Run Project** (atau tekan `Shift+F6`)
-3. Aplikasi akan di-compile dan dijalankan otomatis
-4. Jika koneksi database berhasil, aplikasi akan terbuka
-5. Lihat status di console untuk verify
-
-### Menggunakan Command Line
-
+**Command Line:**
 ```bash
-# Navigate ke project directory
-cd PetShopApp
-
-# Compile
 javac -cp lib/mysql-connector-j-8.0.33.jar -d build/classes src/petshopapp/*.java
-
-# Run
 java -cp lib/mysql-connector-j-8.0.33.jar:build/classes petshopapp.MainApp
-```
-
-### Menggunakan JAR File (Jika sudah di-export)
-
-```bash
-java -jar PetShopApp.jar
 ```
 
 ---
 
 ## 📖 Panduan Penggunaan
 
-### 1️⃣ Tampilan Awal Aplikasi
-
-Saat aplikasi dibuka, Anda akan melihat:
-- **Panel Kiri**: Form input untuk menambah/edit produk
-- **Panel Kanan**: Tabel data produk yang sudah ada (10 data sample)
-- **Status Bar Bawah**: Menampilkan status setiap aksi
-
-### 2️⃣ Menambah Produk Baru
+### 1️⃣ Menambah Produk Baru
 
 ```
-1. Isi form di panel kiri:
-   - Kode Produk    : Masukkan kode unik (contoh: PT011)
-   - Nama Produk    : Nama hewan/produk (contoh: "Burung Lovebird")
-   - Jenis          : Pilih dari dropdown (7 kategori tersedia)
-   - Stok           : Jumlah produk dalam angka
-   - Harga (Rp)     : Harga dalam rupiah (angka saja, format otomatis)
+┌─────────────────────────────────────────┐
+│  FORM INPUT PRODUK / HEWAN              │
+│─────────────────────────────────────────│
+│  Kode Produk *       : PT011            │
+│  Nama Produk *       : Burung Lovebird  │
+│  Jenis *             : Hewan Peliharaan │
+│  Stok *              : 4                │
+│  Harga (Rp) *        : 850000           │
+│─────────────────────────────────────────│
+│ [ ➕ Tambah ] [ ✏ Update ] [ 🗑 Hapus ] │
+│ [ 🔄 Bersihkan ]                        │
+└─────────────────────────────────────────┘
 
-2. Klik tombol "➕ Tambah"
-
-3. Sistem akan:
-   ✓ Validasi semua field tidak kosong
-   ✓ Cek kode tidak sudah terdaftar
-   ✓ Insert ke database
-   ✓ Refresh tabel otomatis
-   ✓ Menampilkan pesan sukses di status bar
-
-4. Form otomatis kosong, siap input berikutnya
+✓ Isi semua field
+✓ Klik "➕ Tambah"
+✓ Sistem validasi → Insert ke database
+✓ Tabel refresh otomatis
+✓ Status: "✅ Produk berhasil ditambahkan"
 ```
 
-**Contoh Input:**
-| Field | Value |
-|-------|-------|
-| Kode Produk | PT011 |
-| Nama Produk | Burung Lovebird |
-| Jenis | Hewan Peliharaan |
-| Stok | 4 |
-| Harga | 850000 |
+---
 
-### 3️⃣ Mengubah (Update) Produk
+### 2️⃣ Mengubah (Update) Produk
 
 ```
-1. Di tabel sebelah kanan, KLIK pada baris produk yang ingin diubah
-   → Form otomatis terisi dengan data produk tersebut
-   → Tombol "✏ Update" & "🗑 Hapus" menjadi aktif
-   → Kode Produk menjadi read-only (tidak bisa diedit)
+STEP 1: PILIH DATA DI TABEL
+┌────────────────────────────────────────┐
+│ Kode │ Nama          │ Jenis │ Stok │ Harga
+├────────────────────────────────────────┤
+│ PT001 │ Kucing Persia │ Hewan │  5  │ Rp 2,5M  ← KLIK BARIS INI
+│ PT002 │ Anjing GR     │ Hewan │  3  │ Rp 4,5M
+└────────────────────────────────────────┘
 
-2. Ubah field yang diperlukan:
-   - BISA mengubah: Nama, Jenis, Stok, Harga
-   - TIDAK BISA: Kode (sudah locked)
+STEP 2: FORM OTOMATIS TERISI
+┌─────────────────────────────────────────┐
+│  FORM INPUT PRODUK / HEWAN              │
+│─────────────────────────────────────────│
+│  Kode Produk *       : PT001 [LOCKED]   │
+│  Nama Produk *       : Kucing Persia    │
+│  Jenis *             : Hewan Peliharaan │
+│  Stok *              : 5  ← EDIT: 5→6   │
+│  Harga (Rp) *        : 2500000          │
+│─────────────────────────────────────────│
+│ [ ➕ Tambah ] [ ✏ Update ✓ ] [ 🗑 Hapus ✓ ]
+└─────────────────────────────────────────┘
 
-3. Klik tombol "✏ Update"
-
-4. Dialog konfirmasi muncul, klik "Yes"
-
-5. Data akan ter-update di database dan tabel langsung refresh
-   → Status bar menampilkan pesan sukses
+STEP 3: KLIK "✏ Update"
+  Dialog: "Update data produk 'Kucing Persia'?"
+  → Click "Yes"
+  → Database updated
+  → Tabel refresh
+  → Status: "✏ Produk berhasil diupdate: Kucing Persia"
 ```
 
-### 4️⃣ Menghapus Produk
+---
+
+### 3️⃣ Menghapus Produk
 
 ```
-1. Klik pada baris produk di tabel
-   → Form terisi otomatis
-   → Tombol "🗑 Hapus" aktif
+STEP 1: PILIH PRODUK DI TABEL
+┌────────────────────────────────────────┐
+│ Kode │ Nama          │ Jenis │ Stok │ Harga
+├────────────────────────────────────────┤
+│ PT008 │ Hamster Syria │ Hewan │ 10  │ Rp 120K ← KLIK
+└────────────────────────────────────────┘
 
-2. Klik tombol "🗑 Hapus"
+STEP 2: FORM TERISI + TOMBOL AKTIF
+┌─────────────────────────────────────────┐
+│  Kode Produk *       : PT008             │
+│  Nama Produk *       : Hamster Syria     │
+│  Jenis *             : Hewan Peliharaan  │
+│  Stok *              : 10                │
+│  Harga (Rp) *        : 120000            │
+│─────────────────────────────────────────│
+│ [ ➕ Tambah ] [ ✏ Update ] [ 🗑 Hapus ✓ ]
+└─────────────────────────────────────────┘
 
-3. Dialog konfirmasi muncul:
-   "Hapus produk dengan kode 'PT001'?
-    Data tidak dapat dikembalikan!"
+STEP 3: KLIK "🗑 Hapus"
+  ⚠️ DIALOG KONFIRMASI:
+  ┌──────────────────────────────────────┐
+  │ ⚠️ Konfirmasi Hapus                   │
+  │                                       │
+  │ Hapus produk dengan kode 'PT008'?     │
+  │ Data tidak dapat dikembalikan!        │
+  │                                       │
+  │  [ Yes ]  [ No ]                      │
+  └──────────────────────────────────────┘
 
-4. Klik "Yes" untuk konfirmasi
-
-5. Produk dihapus dari database
-   → Tabel ter-refresh
-   → Status bar: "Produk dengan kode 'PT001' berhasil dihapus"
+STEP 4: KLIK "Yes"
+  → Produk dihapus dari database
+  → Tabel refresh (tinggal 9 data)
+  → Status: "🗑 Produk 'PT008' berhasil dihapus"
 ```
 
-### 5️⃣ Mencari Produk (Search)
+---
+
+### 4️⃣ Mencari Produk
 
 ```
-1. Di panel kanan, ketik di kolom search
-   Contoh: "anjing" atau "PT005" atau "kandang"
+SEARCH BAR:
+┌────────────────────────────────────┐
+│ 🔍 Cari kode, nama, atau jenis...  │ ↺ Refresh
+└────────────────────────────────────┘
 
-2. Klik tombol "🔍 Cari"
+INPUT: "anjing"
 
-3. Tabel akan menampilkan hasil pencarian
-   (cari di: Kode, Nama, atau Jenis)
+HASIL PENCARIAN:
+┌────────────────────────────────────┐
+│ Kode │ Nama            │ Jenis │...│
+├────────────────────────────────────┤
+│ PT002 │ Anjing Golden   │ Hewan │...│
+│ PT007 │ Shampo Anjing   │ Groom │...│
+│ PT010 │ Kalung Anjing   │ Akses │...│
+└────────────────────────────────────┘
 
-4. Untuk reset ke semua data, klik "↺ Refresh"
+✓ Sistem mencari di: Kode + Nama + Jenis
+✓ Hasil case-insensitive
+✓ Klik "↺ Refresh" untuk reset
 ```
 
-### 6️⃣ Membersihkan Form
+---
+
+## 🎨 Tampilan Aplikasi (Screenshots)
+
+### Screenshot 1: Halaman Utama Aplikasi
 
 ```
-1. Klik tombol "🔄 Bersihkan" di panel kiri
+╔════════════════════════════════════════════════════════════════════════════╗
+║  🐾  PET SHOP MANAGEMENT SYSTEM  |  Dev: Hizkia Siallagan  |  231011400154 ║
+║─────────────────────────────────────────────────────────────────────────────║
+║                         MAIN WINDOW (1000x680)                              ║
+║                                                                              ║
+║  ┌─────────────────────────────┬──────────────────────────────────────────┐ ║
+║  │ FORM INPUT PRODUK / HEWAN   │ TABEL DATA PRODUK                        │ ║
+║  │─────────────────────────────┼──────────────────────────────────────────┤ ║
+║  │                             │ 🔍 Cari...     [ 🔍 Cari] [ ↺ Refresh]  │ ║
+║  │ Kode Produk *   : [        ]│                                          │ ║
+║  │ Nama Produk *   : [        ]│ ┌──────────────────────────────────────┐ ║
+║  │ Jenis *         : [▼]       │ │ Kode│ Nama         │Jenis│Stok│Harga  │ ║
+║  │ Stok *          : [        ]│ ├──────────────────────────────────────┤ ║
+║  │ Harga (Rp) *    : [        ]│ │PT001│ Kucing Persia│Hewan│ 5 │ 2.5M  │ ║
+║  │                             │ │PT002│ Anjing GR    │Hewan│ 3 │ 4.5M  │ ║
+║  │                             │ │PT003│ Royal Canin  │Makan│20 │ 185K  │ ║
+║  │ ┌─────────────────────────┐ │ │PT004│ Pedigree     │Makan│15 │ 145K  │ ║
+║  │ │ ➕ Tambah │ ✏ Update  │ │ │PT005│ Kandang      │Kand │ 8 │ 350K  │ ║
+║  │ │ 🗑 Hapus  │🔄 Bersih  │ │ │PT006│ Vitamin      │Obat │30 │  55K  │ ║
+║  │ └─────────────────────────┘ │ │PT007│ Shampo       │Groom│25 │  45K  │ ║
+║  │                             │ │PT008│ Hamster      │Hewan│10 │ 120K  │ ║
+║  │                             │ │PT009│ Aquarium     │Kand │ 6 │ 450K  │ ║
+║  │                             │ │PT010│ Kalung       │Akses│40 │  75K  │ ║
+║  │                             │ └──────────────────────────────────────┘ ║
+║  └─────────────────────────────┴──────────────────────────────────────────┘ ║
+║─────────────────────────────────────────────────────────────────────────────║
+║ ✅ Menampilkan 10 data produk/hewan.                                         ║
+╚════════════════════════════════════════════════════════════════════════════╝
 
-2. Semua field dalam form akan kosong
+LEGENDA WARNA:
+  🟢 Tombol Tambah   (Hijau - CLR_SUCCESS)
+  🟠 Tombol Update   (Oranye - CLR_ACCENT)
+  🔴 Tombol Hapus    (Merah - CLR_DANGER)
+  🔵 Tombol Search   (Biru - CLR_PRIMARY)
+```
 
-3. Kode Produk kembali editable
+---
 
-4. Tombol "✏ Update" & "🗑 Hapus" menjadi disabled
+### Screenshot 2: Proses Edit Data
 
-5. Tombol "➕ Tambah" aktif kembali
+```
+╔════════════════════════════════════════════════════════════════════════════╗
+║  SEBELUM KLIK BARIS:                                                       ║
+║  ┌─────────────────────────────┐                                           ║
+║  │ FORM INPUT (KOSONG)         │                                           ║
+║  │─────────────────────────────│                                           ║
+║  │ Kode Produk *   : [        ]│ ← Editable                               ║
+║  │ Nama Produk *   : [        ]│                                           ║
+║  │ Jenis *         : [▼]       │                                           ║
+║  │ Stok *          : [        ]│                                           ║
+║  │ Harga (Rp) *    : [        ]│                                           ║
+║  │                             │                                           ║
+║  │ ┌─────────────────────────┐ │                                           ║
+║  │ │ ➕ Tambah [✓] │ ✏ Update│ │ ← Update DISABLED                        ║
+║  │ │ 🗑 Hapus     │🔄 Bersih│ │ ← Delete DISABLED                        ║
+║  │ └─────────────────────────┘ │                                           ║
+║  └─────────────────────────────┘                                           ║
+║  Status: ✅ Form dibersihkan.                                               ║
+║─────────────────────────────────────────────────────────────────────────────║
+║  SETELAH KLIK PT002 (Anjing Golden Retriever):                              ║
+║  ┌─────────────────────────────┐                                           ║
+║  │ FORM INPUT (TERISI)         │                                           ║
+║  │─────────────────────────────│                                           ║
+║  │ Kode Produk *   : PT002 [X] │ ← Read-only (tidak bisa diedit)          ║
+║  │ Nama Produk *   : Anjing Golden Retriever                               │ ║
+║  │ Jenis *         : [Hewan Peliharaan ▼]                                  │ ║
+║  │ Stok *          : [3        ] ← BISA DIUBAH                             │ ║
+║  │ Harga (Rp) *    : [4500000  ] ← BISA DIUBAH                             │ ║
+║  │                             │                                           ║
+║  │ ┌─────────────────────────┐ │                                           ║
+║  │ │ ➕ Tambah [X] │ ✏ Update│ │ ← Update ENABLED ✓                       ║
+║  │ │ 🗑 Hapus  [✓] │🔄 Bersih│ │ ← Delete ENABLED ✓                       ║
+║  │ └─────────────────────────┘ │                                           ║
+║  └─────────────────────────────┘                                           ║
+║  Status: ✏ Mengedit: Anjing Golden Retriever                               ║
+╚════════════════════════════════════════════════════════════════════════════╝
+```
+
+---
+
+### Screenshot 3: Dialog Konfirmasi
+
+```
+┌──────────────────────────────────────────┐
+│ ⚠️  KONFIRMASI OPERASI                    │
+├──────────────────────────────────────────┤
+│                                           │
+│  Update data produk 'Anjing Golden       │
+│  Retriever'?                              │
+│                                           │
+│          [ ✓ Yes ]   [ ✗ No ]            │
+│                                           │
+└──────────────────────────────────────────┘
+
+ATAU untuk Delete:
+
+┌──────────────────────────────────────────┐
+│ ⚠️  KONFIRMASI HAPUS                      │
+├──────────────────────────────────────────┤
+│                                           │
+│  Hapus produk dengan kode 'PT002'?        │
+│  Data tidak dapat dikembalikan!           │
+│                                           │
+│          [ ✓ Yes ]   [ ✗ No ]            │
+│                                           │
+└──────────────────────────────────────────┘
+```
+
+---
+
+### Screenshot 4: Status Bar Messages
+
+```
+Status Bar berada di BAWAH aplikasi dan menampilkan pesan:
+
+Keadaan                              Pesan Status                    Warna
+─────────────────────────────────────────────────────────────────────────
+Aplikasi buka                        ✅ Menampilkan 10 data...       BLUE
+Form dibersihkan                     ✅ Form dibersihkan             BLUE
+Pilih item di tabel                  ✏ Mengedit: [nama produk]       ORANGE
+Tambah berhasil                      ✅ Produk berhasil ditambahkan  GREEN
+Update berhasil                      ✏ Produk berhasil diupdate      ORANGE
+Delete berhasil                      🗑 Produk berhasil dihapus      RED
+Form kosong saat input               ⚠ Kode tidak boleh kosong      RED
+Koneksi database gagal               ⚠ Gagal konek database         RED
+Search hasil                         📋 Menampilkan X data produk   BLUE
+```
+
+---
+
+## 📊 Use Case Diagram & Explanation
+
+### 🎯 Use Case Model
+
+```
+                    ┌─────────────┐
+                    │   SISTEM    │
+                    │  PETSHOP    │
+                    └─────────────┘
+                           │
+        ┌──────────────────┼──────────────────┐
+        │                  │                  │
+        ▼                  ▼                  ▼
+    ┌─────────┐      ┌──────────┐       ┌──────────┐
+    │ ADMIN   │      │ DATABASE │       │  SISTEM  │
+    │         │      │  MySQL   │       │  UI      │
+    └─────────┘      └──────────┘       └──────────┘
+        │                  │                  │
+        ├──────────────────┴──────────────────┤
+        │                                      │
+        └──────────────────┬───────────────────┘
+                           │
+        ┌──────────────────┼──────────────────┐
+        │                  │                  │
+        ▼                  ▼                  ▼
+    ┌─────────┐      ┌─────────┐      ┌─────────────┐
+    │  TAMBAH │      │ BACA    │      │   CARI      │
+    │ PRODUK  │      │ PRODUK  │      │  / FILTER   │
+    └─────────┘      └─────────┘      └─────────────┘
+        │                  │                  │
+        ├──────────────────┼──────────────────┤
+        │                  │                  │
+        ▼                  ▼                  ▼
+    ┌─────────┐      ┌─────────┐      ┌─────────────┐
+    │  UBAH   │      │ HAPUS   │      │  VALIDASI   │
+    │ PRODUK  │      │ PRODUK  │      │   INPUT     │
+    └─────────┘      └─────────┘      └─────────────┘
+        │                  │
+        └──────────────────┴────────────────┐
+                           │                 │
+                           ▼                 ▼
+                      ┌──────────┐    ┌─────────────┐
+                      │KONFIRMASI│    │ SIMPAN DB   │
+                      │ DIALOG   │    │ / UPDATE    │
+                      └──────────┘    └─────────────┘
+
+AKTOR: Admin/User Toko
+SISTEM: PetShopApp (Java Swing + MySQL)
+INTERAKSI: Form input → Validasi → Database → Tabel refresh
+```
+
+---
+
+### 📋 Use Case Specifications
+
+| # | Use Case | Aktor | Deskripsi | Precondition | Postcondition |
+|---|----------|-------|-----------|--------------|---------------|
+| **UC-01** | **Tambah Produk** | Admin | Menambah produk/hewan baru ke database | Database connected, form kosong | Data tersimpan, tabel refresh |
+| **UC-02** | **Lihat Semua Produk** | Admin | Menampilkan semua data produk di tabel | App buka | Tabel show 10 data |
+| **UC-03** | **Cari Produk** | Admin | Mencari produk by kode/nama/jenis | Tabel berisi data | Hasil filter ditampilkan |
+| **UC-04** | **Edit Produk** | Admin | Mengubah data produk existing | Produk dipilih dari tabel | Data terupdate di DB |
+| **UC-05** | **Hapus Produk** | Admin | Menghapus produk dari database | Produk dipilih, konfirmasi yes | Produk dihapus, tabel refresh |
+| **UC-06** | **Validasi Input** | System | Cek field tidak kosong & tipe data benar | User input data | Pesan error jika invalid |
+
+---
+
+## 🔄 Workflow & Sequence Diagrams
+
+### 1️⃣ CRUD Workflow (Siklus Lengkap)
+
+```
+START
+  │
+  ├─→ [1] APLIKASI DIBUKA
+  │        └─→ MainApp.java → DatabaseConnection.testConnection()
+  │           └─→ ✓ Koneksi berhasil? → MainFrame ditampilkan
+  │           └─→ ✗ Koneksi gagal?    → Dialog error, tapi frame tetap buka
+  │
+  ├─→ [2] MENAMPILKAN DATA (READ ALL)
+  │        └─→ ProdukDAO.getAll() → Query: SELECT * FROM produk_hewan
+  │           └─→ ResultSet → Loop create Produk objects
+  │           └─→ Tabel refresh dengan 10 data
+  │
+  ├─→ [3] USER MEMILIH AKSI
+  │        ├─→ [A] TAMBAH PRODUK
+  │        │        └─→ Fill form → Validasi form
+  │        │           ├─→ ✓ Valid?     → ProdukDAO.tambah()
+  │        │           │                → INSERT query
+  │        │           │                → Tabel refresh
+  │        │           └─→ ✗ Invalid?   → Warning dialog
+  │        │
+  │        ├─→ [B] KLIK PRODUK DI TABEL (untuk Edit/Delete)
+  │        │        └─→ isiFormDariTabel()
+  │        │           └─→ Form otomatis terisi
+  │        │           └─→ Tombol Update & Delete enabled
+  │        │
+  │        ├─→ [C] UPDATE PRODUK
+  │        │        └─→ Edit form fields
+  │        │           └─→ Klik "✏ Update"
+  │        │           └─→ Konfirmasi dialog muncul
+  │        │           └─→ Click "Yes" → ProdukDAO.update()
+  │        │           └─→ UPDATE query
+  │        │           └─→ Tabel refresh
+  │        │
+  │        ├─→ [D] DELETE PRODUK
+  │        │        └─→ Klik "🗑 Hapus"
+  │        │           └─→ Konfirmasi dialog muncul
+  │        │           └─→ Click "Yes" → ProdukDAO.hapus()
+  │        │           └─→ DELETE query
+  │        │           └─→ Tabel refresh
+  │        │
+  │        └─→ [E] SEARCH PRODUK
+  │                 └─→ Ketik di search field
+  │                    └─→ Klik "🔍 Cari"
+  │                    └─→ ProdukDAO.search(keyword)
+  │                    └─→ Tabel filter hasil
+  │                    └─→ Klik "↺ Refresh" untuk reset
+  │
+  └─→ [4] LOOP kembali ke step [3] atau KELUAR aplikasi
+       └─→ Semua data tersimpan di database
+```
+
+---
+
+### 2️⃣ Sequence Diagram - Tambah Produk
+
+```
+User              MainFrame            Validasi           ProdukDAO          Database
+  │                  │                    │                  │                   │
+  │  1. Fill Form    │                    │                  │                   │
+  ├─────────────────>│                    │                  │                   │
+  │                  │                    │                  │                   │
+  │  2. Click Tambah │                    │                  │                   │
+  ├─────────────────>│                    │                  │                   │
+  │                  │  3. Validasi Form  │                  │                   │
+  │                  ├───────────────────>│                  │                   │
+  │                  │  (check kosong, type)                 │                   │
+  │                  │<───────────────────┤                  │                   │
+  │                  │  4. Form valid     │                  │                   │
+  │                  │                    │                  │                   │
+  │                  │  5. Call tambah()  │                  │                   │
+  │                  ├─────────────────────────────────────>│                   │
+  │                  │                    │                  │  6. INSERT query   │
+  │                  │                    │                  ├──────────────────>│
+  │                  │                    │                  │                   │
+  │                  │                    │                  │  7. Insert OK ✓    │
+  │                  │                    │                  │<──────────────────┤
+  │                  │                    │                  │                   │
+  │                  │  8. Refresh table  │                  │                   │
+  │                  ├────────────────────────────────────────────────────────>│
+  │                  │                    │                  │  9. SELECT all    │
+  │                  │                    │                  │<──────────────────┤
+  │                  │                    │                  │                   │
+  │  10. Display msg │                    │                  │                   │
+  │<─────────────────┤                    │                  │                   │
+  │  "✅ Berhasil"   │                    │                  │                   │
+  │
+```
+
+---
+
+### 3️⃣ Sequence Diagram - Delete Produk
+
+```
+User              MainFrame         Dialog             ProdukDAO         Database
+  │                  │                │                  │                 │
+  │  1. Click Delete │                │                  │                 │
+  ├─────────────────>│                │                  │                 │
+  │                  │                │                  │                 │
+  │                  │  2. Show Dialog│                  │                 │
+  │                  ├───────────────>│                  │                 │
+  │  3. Confirm?     │<───────────────┤                  │                 │
+  │  [Yes] [No]      │                │                  │                 │
+  │                  │                │                  │                 │
+  │  4. Click "Yes"  │                │                  │                 │
+  ├─────────────────>│                │                  │                 │
+  │                  │  5. Call hapus()                  │                 │
+  │                  ├─────────────────────────────────>│                 │
+  │                  │                │                  │                 │
+  │                  │                │  6. DELETE query │                 │
+  │                  │                │                  ├────────────────>│
+  │                  │                │                  │                 │
+  │                  │                │                  │  7. Delete OK ✓ │
+  │                  │                │                  │<────────────────┤
+  │                  │                │                  │                 │
+  │                  │  8. Refresh table (Tabel update) │                 │
+  │                  ├─────────────────────────────────────────────────>│
+  │                  │                │                  │  9. SELECT all  │
+  │                  │                │                  │<────────────────┤
+  │                  │                │                  │                 │
+  │  10. Status msg  │                │                  │                 │
+  │<─────────────────┤                │                  │                 │
+  │  "🗑 Dihapus"   │                │                  │                 │
+  │
+```
+
+---
+
+## 💼 Use Case Details & Scenarios
+
+### 🎯 Use Case 1: Admin Kelola Stok Harian
+
+**Nama:** Tambah, Lihat, Edit, Hapus Produk  
+**Aktor:** Admin/Pemilik Toko  
+**Tujuan:** Mengelola inventori stok hewan & produk setiap hari
+
+#### Scenario A: Saat Pagi (Buka Aplikasi)
+
+```
+WAKTU: 07:00 - Pagi hari
+
+1. Admin datang ke toko
+   └─→ Buka aplikasi PetShopApp
+   
+2. Aplikasi startup
+   ┌─────────────────────────────────────┐
+   │ 🐾 PET SHOP MANAGEMENT SYSTEM       │
+   │─────────────────────────────────────│
+   │ [Connecting to database...]         │
+   │ [Loading data...]                   │
+   │ [Success! Connected to MySQL]       │
+   └─────────────────────────────────────┘
+   
+3. Main window terbuka
+   └─→ Tabel menampilkan 10 produk yang sudah ada
+   └─→ Status: "✅ Menampilkan 10 data produk/hewan"
+   
+4. Admin lihat stok pagi ini
+   ├─→ Kucing Persia: 5 ekor (normal ✓)
+   ├─→ Anjing GR: 3 ekor (normal ✓)
+   ├─→ Hamster: 10 ekor (normal ✓)
+   └─→ Stok semua masih aman
+```
+
+#### Scenario B: Hewan Baru Tiba dari Supplier
+
+```
+WAKTU: 09:00 - Supplier datang
+
+SITUASI: Supplier kirim 4 ekor burung lovebird (belum ada di sistem)
+
+LANGKAH:
+1. Admin fill form:
+   ┌────────────────────────────────────┐
+   │ Kode Produk *    : PT011           │
+   │ Nama Produk *    : Burung Lovebird │
+   │ Jenis *          : Hewan Peliharaan│
+   │ Stok *           : 4               │
+   │ Harga (Rp) *     : 850000          │
+   └────────────────────────────────────┘
+
+2. Admin click "➕ Tambah"
+
+3. Sistem process:
+   ✓ Validasi: semua field terisi
+   ✓ Cek duplicate: kode PT011 belum ada
+   ✓ Insert: INSERT INTO produk_hewan (PT011, Lovebird, ...)
+   ✓ Database: data tersimpan
+   ✓ Refresh tabel: 11 data sekarang
+
+4. Result:
+   ┌─────────────────────────────────────────┐
+   │ Kode │ Nama           │ Jenis │Stok│   │
+   ├─────────────────────────────────────────┤
+   │ ...                                     │
+   │ PT011│ Burung Love..  │Hewan │ 4 │850K│ ← NEW ENTRY
+   │ ...                                     │
+   └─────────────────────────────────────────┘
+   
+   Status: "✅ Produk berhasil ditambahkan: Burung Lovebird"
+```
+
+#### Scenario C: Anjing Terjual (Update Stok)
+
+```
+WAKTU: 11:30 - Customer beli Anjing
+
+SITUASI: Ada yang beli 1 Anjing Golden Retriever (stok 3 → 2)
+
+LANGKAH:
+1. Admin click baris PT002 (Anjing GR) di tabel
+   
+2. Form otomatis terisi:
+   ┌────────────────────────────────────────────┐
+   │ Kode Produk *    : PT002 [LOCKED - read]  │
+   │ Nama Produk *    : Anjing Golden Retriever│
+   │ Jenis *          : Hewan Peliharaan       │
+   │ Stok *           : 3                      │
+   │ Harga (Rp) *     : 4500000                │
+   └────────────────────────────────────────────┘
+   
+   Tombol Update & Delete aktif ✓
+
+3. Admin ubah stok:
+   Stok: 3 → 2 (kurang 1 karena terjual)
+
+4. Admin click "✏ Update"
+
+5. Dialog konfirmasi:
+   ┌──────────────────────────────────┐
+   │ Update data 'Anjing GR'?          │
+   │  [ ✓ Yes ]     [ ✗ No ]          │
+   └──────────────────────────────────┘
+
+6. Admin click "Yes"
+
+7. Database UPDATE:
+   UPDATE produk_hewan SET stok=2 WHERE kode='PT002'
+
+8. Tabel refresh:
+   │ PT002│ Anjing Golden..│Hewan│ 2 │4.5M│ ← STOK BERUBAH
+   
+   Status: "✏ Produk berhasil diupdate: Anjing Golden Retriever"
+```
+
+#### Scenario D: Hamster Tidak Laku (Delete Produk)
+
+```
+WAKTU: 14:00 - Owner review produk
+
+SITUASI: Hamster Syria jarang diminati, owner ingin hapus dari sistem
+
+LANGKAH:
+1. Admin klik baris PT008 (Hamster Syria) di tabel
+
+2. Form terisi:
+   ┌────────────────────────────────────────┐
+   │ Kode Produk *    : PT008               │
+   │ Nama Produk *    : Hamster Syria       │
+   │ Jenis *          : Hewan Peliharaan    │
+   │ Stok *           : 10                  │
+   │ Harga (Rp) *     : 120000              │
+   └────────────────────────────────────────┘
+   
+   Tombol Delete aktif ✓
+
+3. Admin click "🗑 Hapus"
+
+4. Dialog konfirmasi BAHAYA:
+   ┌─────────────────────────────────────┐
+   │ ⚠️  KONFIRMASI HAPUS                  │
+   │─────────────────────────────────────│
+   │                                      │
+   │ Hapus produk dengan kode 'PT008'?    │
+   │ Data tidak dapat dikembalikan!       │
+   │                                      │
+   │  [ ✓ Yes ]     [ ✗ No ]             │
+   │                                      │
+   └─────────────────────────────────────┘
+
+5. Admin berpikir... lalu click "Yes" (confirm)
+
+6. Database DELETE:
+   DELETE FROM produk_hewan WHERE kode='PT008'
+
+7. Tabel refresh: tinggal 10 data
+   (Hamster hilang dari list)
+
+8. Status: "🗑 Produk 'PT008' berhasil dihapus"
+```
+
+#### Scenario E: Akhir Hari (Backup Data)
+
+```
+WAKTU: 17:00 - Tutup toko
+
+AKTIVITAS:
+├─→ Admin review stok akhir hari (tabel menampilkan)
+├─→ Pastikan semua data terupdate
+├─→ Tutup aplikasi (data otomatis saved di DB)
+└─→ MySQL background service tetap running
+
+NEXT DAY: Data masih ada, ready untuk hari berikutnya ✓
+```
+
+---
+
+### 🔍 Use Case 2: Staff Cari Produk untuk Pelanggan
+
+**Nama:** Search/Filter Produk  
+**Aktor:** Staff Toko  
+**Tujuan:** Menjawab pertanyaan customer tentang ketersediaan produk
+
+#### Scenario: Customer Tanya "Ada Grooming Supplies?"
+
+```
+SITUASI:
+Customer: "Excuse me, ada grooming supplies untuk anjing tidak?"
+Staff: "Tunggu sebentar, saya cek sistemnya"
+
+LANGKAH:
+1. Staff di aplikasi, lihat tabel penuh (10 data)
+
+2. Staff ketik di search field:
+   ┌────────────────────────────────────┐
+   │ 🔍 grooming                        │ [ 🔍 Cari ] [ ↺ Refresh ]
+   └────────────────────────────────────┘
+
+3. Staff click "🔍 Cari"
+
+4. Sistem search:
+   SELECT * FROM produk_hewan 
+   WHERE kode LIKE '%grooming%' 
+      OR nama LIKE '%grooming%' 
+      OR jenis LIKE '%grooming%'
+
+5. HASIL (Filter tabel):
+   ┌──────────────────────────────────┐
+   │ Kode │Nama           │Jenis │Stok│
+   ├──────────────────────────────────┤
+   │PT007 │ Shampo Anjing │Groom │25  │
+   │      │Anti Jamur     │      │    │
+   └──────────────────────────────────┘
+
+6. Staff baca hasil:
+   - Ada 1 item: Shampo Anjing Anti Jamur
+   - Kategori: Grooming
+   - Stok: 25 pcs
+   - Harga: Rp 45,000
+
+7. Staff jawab customer:
+   "Ada, kami punya Shampo Anjing Anti Jamur, tersedia 25 kemasan,
+    harganya Rp 45 ribu per botol. Cocok untuk grooming anjing Anda!"
+
+8. Customer: "Oh iya, bagus. Saya ambil 1 botol ya"
+
+9. Staff click "↺ Refresh" untuk kembali lihat semua data
+   Tabel kembali menampilkan 10 produk
+   
+   Status: "📋 Menampilkan 10 data produk/hewan"
+```
+
+---
+
+### 💰 Use Case 3: Owner Hitung Nilai Inventori
+
+**Nama:** Calculate Inventory Value  
+**Aktor:** Pemilik Toko  
+**Tujuan:** Mengetahui total nilai aset inventory untuk laporan keuangan
+
+#### Scenario: Weekly Inventory Valuation
+
+```
+WAKTU: Jumat sore, sebelum tutup minggu
+
+SITUASI: Owner perlu tahu total nilai inventory untuk laporan
+
+LANGKAH:
+1. Owner buka aplikasi → lihat tabel dengan harga
+
+2. Manual calculation (dari tabel):
+   ┌────────────────────────────────────────────────────┐
+   │ Kode │Nama           │Harga   │Stok│ Nilai Stok  │
+   ├────────────────────────────────────────────────────┤
+   │PT001 │Kucing Persia  │2.5M    │5   │ 12,500,000  │
+   │PT002 │Anjing GR      │4.5M    │3   │ 13,500,000  │
+   │PT003 │Royal Canin    │185K    │20  │  3,700,000  │
+   │PT004 │Pedigree       │145K    │15  │  2,175,000  │
+   │PT005 │Kandang Premium│350K    │8   │  2,800,000  │
+   │PT006 │Vitamin        │55K     │30  │  1,650,000  │
+   │PT007 │Shampo         │45K     │25  │  1,125,000  │
+   │PT008 │Hamster        │120K    │10  │  1,200,000  │
+   │PT009 │Aquarium       │450K    │6   │  2,700,000  │
+   │PT010 │Kalung         │75K     │40  │  3,000,000  │
+   ├────────────────────────────────────────────────────┤
+   │                            TOTAL │  44,350,000  │
+   └────────────────────────────────────────────────────┘
+
+3. Owner catat:
+   "Total nilai inventory hari ini: Rp 44,350,000"
+
+4. Owner input ke accounting system atau report
+
+5. Note untuk future (v2.0):
+   💡 Bisa otomatis calculate dengan feature "Generate Report"
+      yang menampilkan summary inventory value per kategori
+```
+
+---
+
+### 📦 Use Case 4: Integrasi dengan POS (Future Feature)
+
+**Nama:** Automatic Stock Update saat Transaksi  
+**Aktor:** Cashier (kasir)  
+**Status:** ❌ Not yet implemented (v2.0 feature)
+
+#### Scenario (Desired Future Flow)
+
+```
+SKENARIO (NANTI DI v2.0):
+Ketika cashier proses penjualan di POS system:
+
+1. Cashier scan/input: PT006 (Vitamin Kucing), qty 3
+
+2. POS system call PetShopApp API:
+   PATCH /api/products/PT006/stock?qty=3
+
+3. PetShopApp update database:
+   UPDATE produk_hewan SET stok = stok - 3 WHERE kode='PT006'
+   (30 → 27)
+
+4. PetShopApp response:
+   {
+     "status": "success",
+     "kode": "PT006",
+     "nama": "Vitamin Kucing Nutri Plus",
+     "stok_lama": 30,
+     "stok_baru": 27
+   }
+
+5. POS menampilkan:
+   ✓ Item: Vitamin Kucing
+   ✓ Qty: 3
+   ✓ Price: Rp 55,000 × 3 = Rp 165,000
+   ✓ Stock update: 30 → 27
+
+6. Jika PetShopApp real-time:
+   - Admin di toko lihat tabel update otomatis
+   - Stok Vitamin Kucing langsung berubah jadi 27
+   - Real-time inventory sync ✓
+
+MANFAAT:
+✓ Stock selalu akurat
+✓ Tidak perlu manual update
+✓ Prevent over-selling
+✓ Automated reporting
 ```
 
 ---
@@ -436,462 +1029,166 @@ Saat aplikasi dibuka, Anda akan melihat:
 PetShopApp/
 │
 ├── src/petshopapp/
-│   ├── MainApp.java              ← Entry point aplikasi
-│   ├── MainFrame.java            ← UI/GUI (Java Swing)
-│   ├── DatabaseConnection.java   ← Koneksi MySQL & config
-│   ├── Produk.java               ← Model/Entity class
-│   └── ProdukDAO.java            ← Data Access Object (CRUD)
+│   ├── MainApp.java              ← Entry point (main method)
+│   ├── MainFrame.java            ← UI/GUI (Java Swing, 443 lines)
+│   ├── DatabaseConnection.java   ← MySQL config & connection
+│   ├── Produk.java               ← Model/Entity (kode, nama, jenis, stok, harga)
+│   └── ProdukDAO.java            ← CRUD operations (156 lines)
 │
 ├── lib/
-│   └── mysql-connector-j-8.0.33.jar  ← MySQL JDBC driver
+│   └── mysql-connector-j-8.0.33.jar  ← JDBC driver
 │
 ├── nbproject/
 │   ├── project.properties        ← NetBeans build config
 │   └── project.xml               ← NetBeans project metadata
 │
-├── build/                        ← Folder output compile (auto-generated)
-├── dist/                         ← Folder JAR distribution (jika di-build)
+├── build/                        ← Compiled output folder
+├── dist/                         ← JAR distribution folder
 │
 ├── manifest.mf                   ← Manifest untuk JAR
 ├── db_Petshop_231011400154.sql   ← Database schema & sample data
-├── README.md                     ← Dokumentasi ini
-└── LICENSE                       ← Lisensi MIT
+├── README.md                     ← Documentation (ini)
+└── LICENSE                       ← MIT License
 ```
-
-### Penjelasan File Kunci
-
-| File | Fungsi |
-|------|--------|
-| `MainApp.java` | Entry point aplikasi - berisi main() method & SwingUtilities |
-| `MainFrame.java` | UI utama - form input, tabel, tombol, styling |
-| `DatabaseConnection.java` | Manage koneksi MySQL & konfigurasi database |
-| `Produk.java` | Model/Entity untuk Produk - getter/setter |
-| `ProdukDAO.java` | CRUD operations - tambah, baca, cari, update, hapus ke database |
-| `db_Petshop_231011400154.sql` | SQL script untuk setup database & sample data |
 
 ---
 
-## 🗄️ Struktur Database
-
-### Tabel: `produk_hewan`
+## 🗄️ Struktur Database dengan Use Case Mapping
 
 ```sql
-CREATE TABLE `produk_hewan` (
-    `kode`  VARCHAR(20)     PRIMARY KEY,  -- Kode unik produk (PT001, PT002, dst)
-    `nama`  VARCHAR(100)    NOT NULL,     -- Nama produk/hewan
-    `jenis` VARCHAR(50)     NOT NULL,     -- Kategori/jenis produk
-    `stok`  INT             DEFAULT 0,    -- Jumlah stok
-    `harga` DECIMAL(15, 2)  DEFAULT 0.00  -- Harga dalam rupiah
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+TABLE: produk_hewan
+┌─────────┬──────────┬────────┬──────┬────────┐
+│ Kode    │ Nama     │ Jenis  │ Stok │ Harga  │ ← Columns
+├─────────┼──────────┼────────┼──────┼────────┤
+│ PT001   │ Kucing   │ Hewan  │ 5    │ 2.5M   │ ← Row 1
+│ PT002   │ Anjing   │ Hewan  │ 3    │ 4.5M   │ ← Row 2 (Update UC)
+│ PT003   │ Makan    │ Makan  │ 20   │ 185K   │ ← Row 3
+│ ...     │ ...      │ ...    │ ...  │ ...    │
+│ PT011   │ Lovebird │ Hewan  │ 4    │ 850K   │ ← Row 11 (Create UC)
+└─────────┴──────────┴────────┴──────┴────────┘
+
+USE CASE MAPPING:
+├─ UC-01 (Tambah): INSERT row baru (PT011)
+├─ UC-02 (Baca):   SELECT * FROM produk_hewan
+├─ UC-03 (Cari):   SELECT * WHERE kode/nama/jenis LIKE '%keyword%'
+├─ UC-04 (Edit):   UPDATE stok/harga WHERE kode='PT002'
+└─ UC-05 (Hapus):  DELETE WHERE kode='PT008'
 ```
-
-### Kategori/Jenis yang Tersedia
-
-1. **Hewan Peliharaan** - Anjing, kucing, hamster, burung, dll
-2. **Makanan Hewan** - Pet food berkualitas
-3. **Kandang & Tempat** - Kandang, aquarium, dll
-4. **Obat & Vitamin** - Suplemen hewan
-5. **Grooming** - Shampo, sikat, dll
-6. **Aksesoris** - Kalung, tali, mainan, dll
-7. **Lainnya** - Kategori bebas
-
-### Sample Data (10 Produk)
-
-| Kode | Nama | Jenis | Stok | Harga |
-|------|------|-------|------|-------|
-| PT001 | Kucing Persia | Hewan Peliharaan | 5 | Rp 2,500,000 |
-| PT002 | Anjing Golden Retriever | Hewan Peliharaan | 3 | Rp 4,500,000 |
-| PT003 | Royal Canin Adult Cat 2kg | Makanan Hewan | 20 | Rp 185,000 |
-| PT004 | Pedigree Adult Dog 3kg | Makanan Hewan | 15 | Rp 145,000 |
-| PT005 | Kandang Kucing Premium | Kandang & Tempat | 8 | Rp 350,000 |
-| PT006 | Vitamin Kucing Nutri Plus | Obat & Vitamin | 30 | Rp 55,000 |
-| PT007 | Shampo Anjing Anti Jamur | Grooming | 25 | Rp 45,000 |
-| PT008 | Hamster Syria | Hewan Peliharaan | 10 | Rp 120,000 |
-| PT009 | Aquarium 60cm + Filter | Kandang & Tempat | 6 | Rp 450,000 |
-| PT010 | Kalung + Tali Anjing | Aksesoris | 40 | Rp 75,000 |
 
 ---
 
-## 🐛 Troubleshooting
+## 🐛 Troubleshooting & Solutions
 
 ### ❌ Error: "Koneksi database gagal"
 
-**Penyebab & Solusi:**
-
 ```
-1️⃣ MySQL Server tidak berjalan
-   Windows: 
-   - Tekan Win+R → ketik "services.msc"
-   - Cari "MySQL80" (atau versi Anda)
-   - Klik kanan → "Start"
-   
-   Linux:
-   - sudo service mysql start
-   - sudo systemctl start mysql
-   
-   macOS:
-   - brew services start mysql
+SOLUSI STEP-BY-STEP:
 
-2️⃣ Database belum dibuat
-   - Buka MySQL console: mysql -u root -p
-   - Jalankan SQL di section "Setup Database MySQL"
-   
-3️⃣ Username/Password salah di DatabaseConnection.java
-   - Edit: src/petshopapp/DatabaseConnection.java
-   - Pastikan USERNAME & PASSWORD sesuai MySQL Anda
-   - Re-compile dan run
+1. Cek MySQL Server berjalan:
+   Windows: Start → Services → MySQL80 (status: Running)
+   Linux:   sudo systemctl status mysql
+   macOS:   brew services list | grep mysql
 
-4️⃣ Port MySQL bukan 3306
-   - Cek port MySQL: SHOW GLOBAL VARIABLES LIKE 'port';
-   - Update di DatabaseConnection.java: private static final String PORT = "3307";
+2. Cek database ada:
+   mysql -u root -p
+   SHOW DATABASES;
+   (Lihat: db_Petshop_231011400154 ?)
+
+3. Cek credentials di kode:
+   Edit: src/petshopapp/DatabaseConnection.java
+   - HOST: localhost ✓
+   - PORT: 3306 ✓
+   - DB_NAME: db_Petshop_231011400154 ✓
+   - USERNAME: root ✓
+   - PASSWORD: (sesuai MySQL Anda) ✓
+
+4. Recompile & test connection:
+   mvn clean compile
+   java -cp ... petshopapp.MainApp
 ```
 
 ---
 
-### ❌ Error: "Driver MySQL tidak ditemukan"
+### ❌ Error: "Duplicate entry untuk Kode 'PT001'"
 
-**Penyebab:**
-MySQL Connector JAR tidak ada di classpath
+```
+PENYEBAB: Kode produk sudah ada di database
 
-**Solusi:**
-
-**Di NetBeans:**
-1. Right-click project → Properties
-2. Sources → Java Sources Classpath
-3. Pastikan ada: `lib/mysql-connector-j-8.0.33.jar`
-4. Jika tidak ada, tambahkan file dari folder lib/
-
-**Command line:**
-```bash
-# Pastikan file ada di folder lib
-ls lib/mysql-connector-j-8.0.33.jar
-
-# Jika tidak ada, download dari:
-# https://dev.mysql.com/downloads/connector/j/
-
-# Atau copy dari repo yang sudah ada
+SOLUSI:
+├─ Gunakan kode unik baru (PT011, PT012, dst)
+└─ Atau hapus produk lama dulu sebelum insert ulang
 ```
 
 ---
 
-### ❌ Error: "Duplicate entry untuk Kode Produk"
+### ⚠️ Tabel kosong saat app buka
 
-**Penyebab:**
-Kode produk yang diinput sudah ada di database
-
-**Solusi:**
 ```
-1. Gunakan kode unik yang berbeda
-   ✗ PT001 (sudah ada)
-   ✓ PT011 (baru - belum ada)
+SOLUSI:
+1. Verify database berisi data:
+   mysql -u root -p db_Petshop_231011400154
+   SELECT COUNT(*) FROM produk_hewan;
+   (Hasil: 10 rows ?)
 
-2. Atau delete produk lama terlebih dahulu
-   - Klik baris di tabel
-   - Klik tombol "🗑 Hapus"
-   - Klik "Yes"
-   - Barulah input dengan kode yang sama
+2. Jika 0 rows, insert sample data:
+   (Copy dari db_Petshop_231011400154.sql)
+
+3. Check query di ProdukDAO.getAll():
+   Confirm: SELECT * FROM produk_hewan ORDER BY kode;
 ```
 
 ---
 
-### ❌ Tabel kosong saat aplikasi dibuka
+## 📞 Support & Contribution
 
-**Penyebab:**
-- Database belum di-setup dengan data
-- Koneksi berhasil tapi tabel kosong
+**Issues & Bugs:**
+- Open issue di: https://github.com/volthz001/PetShopApp/issues
 
-**Solusi:**
-```bash
-# Login ke MySQL
-mysql -u root -p petshop_db_231011400154
+**Saran Fitur v2.0:**
+- Dashboard analytics
+- Export to PDF/Excel
+- Multi-user authentication
+- POS integration
+- Mobile app
 
-# Cek apakah tabel ada
-SHOW TABLES;
-
-# Cek apakah ada data
-SELECT COUNT(*) FROM produk_hewan;
-
-# Jika kosong, insert sample data:
-INSERT INTO `produk_hewan` VALUES 
-('PT001', 'Kucing Persia', 'Hewan Peliharaan', 5, 2500000.00),
-... (lihat bagian "Setup Database")
-
-# Exit
-EXIT;
-```
-
----
-
-### ⚠️ Aplikasi freeze/hang saat load data banyak
-
-**Penyebab:**
-Query terlalu lambat atau timeout koneksi
-
-**Solusi:**
-```java
-// Edit di src/petshopapp/DatabaseConnection.java
-// Tambahkan timeout:
-private static final String URL =
-    "jdbc:mysql://" + HOST + ":" + PORT + "/" + DB_NAME
-    + "?useSSL=false&serverTimezone=Asia/Jakarta&allowPublicKeyRetrieval=true"
-    + "&connectTimeout=5000&socketTimeout=5000";  // ← Tambah ini
-```
-
----
-
-### ✅ Verifikasi Setup Berhasil
-
-Pastikan indikator ini muncul:
-
-```
-✓ Java version muncul saat: java -version
-✓ MySQL connect berhasil: mysql -u root -p
-✓ Database ada: SHOW DATABASES; → db_Petshop_231011400154
-✓ Tabel ada: USE db_Petshop_231011400154; SHOW TABLES;
-✓ Data ada: SELECT COUNT(*) FROM produk_hewan; → 10 rows
-✓ Aplikasi buka tanpa error di console
-✓ Tabel di UI menampilkan 10 data sample
-✓ Status bar: "Menampilkan 10 data produk/hewan"
-```
-
----
-
-## 📋 Use Case & Scenario
-
-### 🛍️ Use Case 1: Admin Kelola Stok Harian
-
-**Scenario:** Pagi hari, admin membuka aplikasi untuk kelola stok
-
-```
-Workflow:
-1. Buka aplikasi → lihat stok semua hewan (Tabel menampilkan 10 data)
-
-2. Hewan baru tiba dari supplier (Kucing Siamese):
-   - Fill form: PT011, "Kucing Siamese", Hewan Peliharaan, Stok: 3, Harga: 3500000
-   - Click "➕ Tambah"
-   - Tabel update → 11 data
-
-3. Anjing sudah terjual (stok kurang 2):
-   - Click PT002 di tabel → form terisi
-   - Ubah stok: 3 → 1
-   - Click "✏ Update"
-   - Tabel update → stok PT002 sekarang 1
-
-4. Hamster mati (tidak bisa dijual):
-   - Click PT008 di tabel
-   - Click "🗑 Hapus"
-   - Confirm → Tabel update → 10 data (Hamster dihapus)
-
-5. Admin selesai, aplikasi ditutup
-```
-
----
-
-### 🔍 Use Case 2: Staff Cari Produk untuk Pelanggan
-
-**Scenario:** Pelanggan bertanya "Ada tidak grooming supplies?"
-
-```
-Workflow:
-1. Staff ketik "grooming" di search bar
-2. Click "🔍 Cari"
-3. Tabel menampilkan hasil: PT007 - Shampo Anjing Anti Jamur
-4. Staff bisa lihat: ada 25 stok, harga Rp 45,000
-5. Staff bilang ke pelanggan: "Ada, tersedia 25 pcs, harganya 45 ribu"
-6. Click "↺ Refresh" untuk lihat semua data lagi
-```
-
----
-
-### 💰 Use Case 3: Laporan Pemilik untuk Keuangan
-
-**Scenario:** Pemilik toko ingin tahu total nilai inventori
-
-```
-Bisa dihitung manual:
-- Lihat kolom "Harga (Rp)"
-- Kalikan dengan "Stok"
-- Jumlahkan semua
-
-Total Inventori = Σ(Harga × Stok)
-Contoh:
-- PT001: 2,500,000 × 5 = 12,500,000
-- PT002: 4,500,000 × 3 = 13,500,000
-- PT003: 185,000 × 20 = 3,700,000
-- ...
-- Total ≈ Rp 75,000,000+
-
-💡 Feature ini bisa di-develop di v2.0
-```
-
----
-
-### 📦 Use Case 4: Integrasi Kasir (Future)
-
-**Scenario:** Saat transaksi di kasir, sistem update stok otomatis
-
-```
-Misal pelanggan beli PT006 (Vitamin) qty 2:
-1. Kasir input: kode PT006, qty 2
-2. Sistem cek: stok PT006 saat ini 30
-3. Proses: stok berkurang 30 → 28
-4. Auto-update di database → tabel refresh
-5. Kasir lihat stok real-time terbaru
-
-Feature ini belum ada di v1.0
-Bisa di-develop di v2.0 dengan POS integration
-```
-
----
-
-## 🔧 Tips & Best Practices
-
-### Development Tips
-
-✅ **Backup Database Rutin**
-```bash
-# Backup database
-mysqldump -u root -p db_Petshop_231011400154 > backup_petshop.sql
-
-# Restore dari backup
-mysql -u root -p db_Petshop_231011400154 < backup_petshop.sql
-```
-
-✅ **Ubah Password MySQL (Opsional)**
-```bash
-mysql -u root -p
-ALTER USER 'root'@'localhost' IDENTIFIED BY 'password_baru';
-FLUSH PRIVILEGES;
-EXIT;
-
-# Update di DatabaseConnection.java:
-private static final String PASSWORD = "password_baru";
-```
-
-✅ **Create User Terpisah (Security)**
-```bash
-mysql -u root -p
-CREATE USER 'petshop_user'@'localhost' IDENTIFIED BY 'petshop_pass';
-GRANT ALL PRIVILEGES ON db_Petshop_231011400154.* TO 'petshop_user'@'localhost';
-FLUSH PRIVILEGES;
-EXIT;
-
-# Update di DatabaseConnection.java:
-private static final String USERNAME = "petshop_user";
-private static final String PASSWORD = "petshop_pass";
-```
-
----
-
-## 📈 Roadmap v2.0 (Future Features)
-
-- [ ] 📊 Dashboard dengan chart statistik (grafik stok, penjualan)
-- [ ] 📥 Export laporan ke PDF/Excel
-- [ ] 👤 Multi-user dengan authentication & role (Admin, Staff, Manager)
-- [ ] 🧾 Modul Penjualan (POS integration)
-- [ ] 📅 History/Log transaksi
-- [ ] 🔔 Notifikasi stok minimum
-- [ ] 📱 Mobile app (Android/iOS)
-- [ ] 🌐 REST API backend (Spring Boot)
-- [ ] 🔐 Enkripsi password database
-- [ ] 🐳 Docker containerization
-
----
-
-## 📸 Screenshots
-
-Aplikasi akan menampilkan:
-1. **Jendela Utama** dengan split pane (form + tabel)
-2. **Form Input** di sebelah kiri dengan 5 field + 4 tombol
-3. **Tabel Data** di sebelah kanan dengan 5 kolom (Kode, Nama, Jenis, Stok, Harga)
-4. **Status Bar** di bawah menampilkan feedback pesan
-5. **Color-coded UI** dengan tema Material Design
-
----
-
-## 🤝 Kontribusi
-
-Ingin improve aplikasi ini? Silakan:
-
-1. **Fork** repository
-2. **Clone** ke local: `git clone https://github.com/volthz001/PetShopApp.git`
-3. **Create branch** fitur: `git checkout -b feature/nama-fitur`
-4. **Commit** perubahan: `git commit -m "Add: deskripsi fitur"`
-5. **Push** ke GitHub: `git push origin feature/nama-fitur`
-6. **Open Pull Request** dengan penjelasan
-
-### Saran untuk Kontribusi:
-- Fix bugs & improve performa
-- Tambah fitur baru (search, filter, export, multi-user)
-- Improve UI/UX (dark theme, responsive, icon, dll)
-- Dokumentasi lebih lengkap
-- Unit tests & automation
-
----
-
-## 📞 Support & Issues
-
-Ada masalah atau pertanyaan?
-
-📧 **Email:** (contact info)  
-🐛 **Report Bug:** https://github.com/volthz001/PetShopApp/issues  
-💬 **Discussion:** https://github.com/volthz001/PetShopApp/discussions  
+**Pull Request Welcome!** 🎉
 
 ---
 
 ## 📄 Lisensi
 
-Project ini dilisensikan di bawah **MIT License**.  
-Lihat file [LICENSE](LICENSE) untuk detail lengkap.
-
-```
-MIT License
-
-Copyright (c) 2025 Hizkia Siallagan - 231011400154
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and subject to the person furnwhom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-```
+**MIT License** - Bebas digunakan untuk keperluan komersial & non-komersial
 
 ---
 
-## 🏫 Tentang Project Ini
+## 👨‍💻 Developer Info
 
 | Aspek | Detail |
 |-------|--------|
-| **Tujuan** | Tugas Kuliah - Praktik Java Swing & Database |
-| **Universitas** | Universitas Pamulang (UNPAM) |
-| **Jurusan** | Teknik Informatika |
-| **Semester** | 6 |
-| **Developer** | Hizkia Siallagan |
+| **Name** | Hizkia Siallagan |
 | **NIM** | 231011400154 |
-| **Status** | ✅ Selesai & Production Ready |
+| **University** | Universitas Pamulang (UNPAM) |
+| **Program** | Teknik Informatika, Semester 6 |
+| **Project Status** | ✅ Complete & Production Ready |
+| **Version** | 1.0.0 |
+| **Last Updated** | June 2025 |
 
 ---
 
-## 📚 Referensi & Resources
+**Terima kasih telah menggunakan PetShopApp! 🐾**
+
+*Setiap feedback dan kontribusi sangat diterima. Jangan ragu untuk membuka issue atau PR!* 💪
+
+---
+
+## 📚 Learning References
 
 - [Oracle Java Swing Tutorial](https://docs.oracle.com/javase/tutorial/uiswing/)
-- [MySQL Official Documentation](https://dev.mysql.com/doc/)
-- [JDBC API Reference](https://docs.oracle.com/javase/8/docs/api/java/sql/package-summary.html)
-- [NetBeans IDE Guide](https://netbeans.apache.org/tutorials/)
-- [GitHub README Best Practices](https://github.com/TryGhost/Ghost/blob/master/README.md)
+- [MySQL Documentation](https://dev.mysql.com/doc/)
+- [JDBC API Guide](https://docs.oracle.com/javase/8/docs/api/java/sql/package-summary.html)
+- [Design Patterns - DAO](https://www.baeldung.com/java-dao-pattern)
+- [Use Case Modeling](https://en.wikipedia.org/wiki/Use_case)
 
 ---
 
-**Made with ❤️ by Hizkia Siallagan**  
-*Last Updated: June 2025*  
-**Version: 1.0.0**
-
-Terima kasih telah menggunakan **PetShopApp**! 🐾
-
----
-
-*Setiap bug yang ditemukan atau saran fitur sangat diterima. Jangan ragu untuk membuka issue atau PR!* 💪
+**Hizkia Siallagan - UNPAM 2025**
