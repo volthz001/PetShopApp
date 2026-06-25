@@ -10,7 +10,7 @@ Aplikasi desktop manajemen data produk & hewan peliharaan berbasis **Java Swing*
 [![Swing](https://img.shields.io/badge/GUI-Java%20Swing-blue)](#)
 [![MySQL](https://img.shields.io/badge/Database-MySQL-4479A1?logo=mysql&logoColor=white)](#)
 [![NetBeans](https://img.shields.io/badge/IDE-NetBeans-1B6AC6?logo=apache-netbeans-ide)](#)
-[![License](https://img.shields.io/badge/License-MIT-green)](#-lisensi)
+[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
 </div>
 
@@ -39,6 +39,7 @@ Aplikasi desktop manajemen data produk & hewan peliharaan berbasis **Java Swing*
 - 🔍 **Cari Data** — pencarian berdasarkan kode, nama, atau jenis
 - ↺ **Refresh Data** — memuat ulang data terbaru dari database
 - ✅ **Validasi Input** — mencegah data kosong/format salah sebelum disimpan
+- 🎨 **Tampilan modern** — terintegrasi dengan [FlatLaf](https://www.formdev.com/flatlaf/) untuk UI yang lebih flat & rapi
 
 ---
 
@@ -47,7 +48,7 @@ Aplikasi desktop manajemen data produk & hewan peliharaan berbasis **Java Swing*
 | Layer | Teknologi |
 |---|---|
 | Bahasa | Java (JDK 11+) |
-| GUI | Java Swing (GridBagLayout, JTable, JOptionPane) |
+| GUI | Java Swing (GridBagLayout, JTable, JOptionPane) + FlatLaf |
 | Database | MySQL 8.x |
 | Konektor | MySQL Connector/J (JDBC) |
 | IDE | Apache NetBeans (Ant-based project) |
@@ -55,27 +56,39 @@ Aplikasi desktop manajemen data produk & hewan peliharaan berbasis **Java Swing*
 
 ---
 
-## 📁 Struktur Project
+## 📁 Struktur Repository
+
+> ⚠️ Source code project berada di dalam subfolder **`PetShopApp/`**, terpisah dari folder `images/` di root.
 
 ```
-PetShopApp/
-├── nbproject/
-│   ├── project.xml
-│   └── project.properties
-├── src/
-│   └── petshopapp/
-│       ├── MainApp.java             ← Entry point aplikasi
-│       ├── MainFrame.java           ← GUI utama (Swing)
-│       ├── Produk.java              ← Model / Entity
-│       ├── ProdukDAO.java           ← Data Access Object (CRUD ke MySQL)
-│       └── DatabaseConnection.java  ← Koneksi JDBC ke MySQL
-├── lib/
-│   └── mysql-connector-j-8.0.33.jar ← (download manual, lihat instalasi)
-├── manifest.mf
-├── build.xml
-├── db_Petshop_231011400154.sql      ← Script pembuatan database
-├── README.md
-└── USE_CASE.md                      ← Dokumentasi use case lengkap
+PetShopApp/                              ← root repository
+├── README.md                            ← dokumen ini
+├── LICENSE
+├── images/                               ← screenshot aplikasi & diagram use case
+│   ├── README.md
+│   ├── 01-tampilan-utama.png
+│   ├── 02-pilih-data-edit.png
+│   ├── 03-konfirmasi-hapus.png
+│   ├── 04-setelah-hapus.png
+│   ├── 05-setelah-tambah.png
+│   └── 06-use-case-diagram.png
+└── PetShopApp/                           ← source code project (buka folder ini di NetBeans)
+    ├── USE_CASE.md                       ← dokumentasi use case lengkap
+    ├── build.xml
+    ├── manifest.mf
+    ├── db_Petshop_231011400154.sql       ← script pembuatan database
+    ├── lib/
+    │   └── mysql-connector-j-8.0.33.jar  ← download manual, lihat bagian Instalasi
+    ├── nbproject/
+    │   ├── project.xml
+    │   └── project.properties
+    └── src/
+        └── petshopapp/
+            ├── MainApp.java              ← entry point aplikasi
+            ├── MainFrame.java            ← GUI utama (Swing)
+            ├── Produk.java               ← model / entity
+            ├── ProdukDAO.java            ← data access object (CRUD ke MySQL)
+            └── DatabaseConnection.java   ← koneksi JDBC ke MySQL
 ```
 
 ---
@@ -93,15 +106,18 @@ PetShopApp/
 | `stok`   | INT            | Jumlah stok         |
 | `harga`  | DECIMAL(15,2)  | Harga satuan (Rp)   |
 
+Script lengkap (struktur + 10 data contoh) ada di [`PetShopApp/db_Petshop_231011400154.sql`](PetShopApp/db_Petshop_231011400154.sql).
+
 ---
 
 ## 🚀 Instalasi & Menjalankan Project
 
 ### 1. Clone repository
 ```bash
-git clone https://github.com/<username>/PetShopApp.git
-cd PetShopApp
+git clone https://github.com/volthz001/PetShopApp.git
+cd PetShopApp/PetShopApp
 ```
+> Perhatikan: kamu harus masuk ke folder `PetShopApp/PetShopApp` (subfolder project), bukan hanya `PetShopApp/` (root repo).
 
 ### 2. Siapkan Database MySQL
 Jalankan file `db_Petshop_231011400154.sql` melalui phpMyAdmin, MySQL Workbench, atau terminal:
@@ -111,11 +127,20 @@ mysql -u root -p < db_Petshop_231011400154.sql
 
 ### 3. Download MySQL Connector/J
 Unduh dari situs resmi: https://dev.mysql.com/downloads/connector/j/
-Pilih versi **8.0.x → Platform Independent → ZIP**, ekstrak, lalu salin file `.jar`-nya ke folder `lib/` pada project ini.
+Pilih versi **8.0.x → Platform Independent → ZIP**, ekstrak, lalu salin file `.jar`-nya ke folder `lib/` di dalam subfolder project (`PetShopApp/PetShopApp/lib/`).
 
-### 4. Buka project di NetBeans
-1. **File → Open Project** → pilih folder `PetShopApp`
-2. Klik kanan project → **Properties → Libraries** → pastikan `mysql-connector-j-x.x.x.jar` sudah ditambahkan
+> 💡 File `.jar` ini **tidak ikut di-commit ke repo** (lihat `.gitignore`) karena ukurannya besar dan mudah di-download ulang.
+
+### 4. (Opsional) Download FlatLaf
+Untuk tampilan modern, unduh juga:
+```
+https://repo1.maven.org/maven2/com/formdev/flatlaf/3.5.4/flatlaf-3.5.4.jar
+```
+Simpan ke folder `lib/` yang sama.
+
+### 5. Buka project di NetBeans
+1. **File → Open Project** → pilih subfolder **`PetShopApp/PetShopApp`** (yang berisi `nbproject/` dan `src/`) — **bukan** folder root repo
+2. Klik kanan project → **Properties → Libraries** → pastikan kedua `.jar` (MySQL Connector & FlatLaf) sudah ditambahkan
 3. Sesuaikan kredensial MySQL (jika perlu) di `src/petshopapp/DatabaseConnection.java`:
    ```java
    private static final String USERNAME = "root";
@@ -127,17 +152,28 @@ Pilih versi **8.0.x → Platform Independent → ZIP**, ekstrak, lalu salin file
 
 ## 🖥️ Tampilan Aplikasi
 
-> Tambahkan screenshot aplikasi Anda di sini setelah dijalankan, contoh:
->
-> | Tampilan Utama | Form Tambah Data |
-> |---|---|
-> | `![main](docs/screenshot-main.png)` | `![tambah](docs/screenshot-tambah.png)` |
+### Tampilan Utama
+![Tampilan Utama](images/01-tampilan-utama.png)
+
+### Memilih & Mengedit Data
+![Pilih Data untuk Edit](images/02-pilih-data-edit.png)
+
+### Konfirmasi Hapus Data
+![Konfirmasi Hapus](images/03-konfirmasi-hapus.png)
+
+### Data Berhasil Dihapus
+![Setelah Hapus](images/04-setelah-hapus.png)
+
+### Data Berhasil Ditambahkan
+![Setelah Tambah](images/05-setelah-tambah.png)
 
 ---
 
 ## 📋 Use Case
 
-Dokumentasi use case diagram lengkap beserta skenario tiap fitur tersedia di **[USE_CASE.md](USE_CASE.md)**.
+![Use Case Diagram](images/06-use-case-diagram.png)
+
+Dokumentasi use case lengkap (aktor, skenario tiap fitur, activity flow, dan pemetaan ke kode program) tersedia di **[PetShopApp/USE_CASE.md](PetShopApp/USE_CASE.md)**.
 
 ---
 
@@ -148,7 +184,8 @@ Dokumentasi use case diagram lengkap beserta skenario tiap fitur tersedia di **[
 | `Driver MySQL tidak ditemukan` | Pastikan `.jar` connector sudah ada di `lib/` dan ditambahkan sebagai Library di NetBeans |
 | `Gagal konek ke database` | Pastikan MySQL server aktif (XAMPP/WAMP/MySQL Server) dan database sudah dibuat |
 | `package does not exist` saat build | Klik kanan project → **Clean and Build** ulang |
-| Tampilan GUI tidak rapi | Pastikan JDK ≥ 11 dan Look and Feel sistem terdukung |
+| Salah buka folder project di NetBeans | Pastikan kamu membuka subfolder `PetShopApp/PetShopApp` (yang ada `nbproject/`), bukan root repo |
+| Tampilan GUI tidak rapi / FlatLaf tidak aktif | Pastikan `flatlaf-x.x.x.jar` sudah ditambahkan ke Libraries dan `FlatLightLaf.setup()` dipanggil di awal `main()` |
 
 ---
 
@@ -158,18 +195,18 @@ Dokumentasi use case diagram lengkap beserta skenario tiap fitur tersedia di **[
 - [ ] Export data ke PDF/Excel
 - [ ] Laporan stok & transaksi penjualan
 - [ ] Relasi tabel transaksi & pelanggan
-- [ ] Migrasi UI ke FlatLaf / tema modern
+- [ ] Dark mode (FlatDarkLaf toggle)
 
 ---
 
 ## 📄 Lisensi
 
-Project ini dibuat untuk keperluan **akademik** (Tugas Akhir / Praktikum) di Universitas Pamulang. Bebas digunakan dan dimodifikasi untuk tujuan pembelajaran.
+Project ini dilisensikan di bawah [MIT License](LICENSE). Dibuat untuk keperluan **akademik** (Tugas Akhir / Praktikum) di Universitas Pamulang — bebas digunakan dan dimodifikasi untuk tujuan pembelajaran.
 
 ---
 
 <div align="center">
 
-Dibuat dengan ❤️ oleh **Hizkia Siallagan** — NIM 231011400154
+Dibuat dengan oleh **Hizkia Siallagan** — NIM 231011400154
 
 </div>
